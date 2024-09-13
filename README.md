@@ -1,5 +1,5 @@
 # Docker Fundamentals
-https://docs.docker.com/build/
+- [Docker Build](https://docs.docker.com/build/)
 
 ## What is covered as part of Docker Fundamentals?
 1. Docker Introduction

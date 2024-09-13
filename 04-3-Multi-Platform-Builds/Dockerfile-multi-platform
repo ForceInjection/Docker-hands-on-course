@@ -1,0 +1,38 @@
+FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
+# 第一阶段：构建阶段
+FROM --platform=$BUILDPLATFORM golang:1.23 AS builder
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y clean
+
+COPY --from=tonistiigi/xx / /
+ADD app /app
+ARG TARGETPLATFORM
+RUN xx-apt install -y libc6-dev gcc
+ENV CGO_ENABLED=1
+WORKDIR /app
+
+# 指定目标平台
+ARG TARGETPLATFORM
+RUN echo "Building for platform: $TARGETPLATFORM"
+
+# 设置环境变量以指定构建平台架构
+RUN xx-go --wrap && if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
+      GOARCH=amd64 GOOS=linux go build -o /bin/hello ./main.go; \
+    elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+      GOARCH=arm64 GOOS=linux go build -o /bin/hello ./main.go; \
+    fi
+
+RUN xx-verify /bin/hello
+
+# 第二阶段：运行阶段
+FROM debian:buster-slim
+
+# 复制二进制文件到运行镜像中
+COPY --from=builder /bin/hello /bin/hello
+
+# 设置工作目录
+WORKDIR /app
+
+# 设置程序入口
+CMD ["/bin/hello"]

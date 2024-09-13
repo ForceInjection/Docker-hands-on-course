@@ -17,12 +17,7 @@ ARG TARGETPLATFORM
 RUN echo "Building for platform: $TARGETPLATFORM"
 
 # 设置环境变量以指定构建平台架构
-RUN xx-go --wrap && if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-      GOARCH=amd64 GOOS=linux xx-go build -o /bin/hello ./main.go; \
-    elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-      GOARCH=arm64 GOOS=linux xx-go build -o /bin/hello ./main.go; \
-    fi \
-    && xx-verify /bin/hello
+RUN xx-go --wrap && xx-go build -o /bin/hello ./main.go && xx-verify /bin/hello
 
 # 第二阶段：运行阶段
 FROM debian:buster-slim

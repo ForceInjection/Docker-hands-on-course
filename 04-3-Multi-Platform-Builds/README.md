@@ -17,8 +17,10 @@ chmod +x ~/.docker/cli-plugins/docker-buildx
 docker buildx build -f Dockerfile-multi-platform --platform linux/arm64 --tag multi-platform:latest --load .
 
 # 同时多平台构建，需要使用 push
-docker buildx build -f Dockerfile-multi-platform --platform linux/amd64,linux/arm64 --tag multi-platform:latest --push .
+docker buildx build -f Dockerfile-multi-platform --platform linux/amd64,linux/arm64 --tag grissomsh/go-multi-platform:latest --push .
 ```
+
+可以访问[docker hub](https://hub.docker.com/repository/docker/grissomsh/go-multi-platform/general)查看。
 
 # 验证
 

@@ -18,7 +18,7 @@ chmod +x ~/.docker/cli-plugins/docker-buildx
 
 采用了多步构建，详细参考[**Dockerfile**](Dockerfile-multi-platform).
 
-关于`xx` 工具的信息，请查看[tonistiigi/xx](https://github.com/tonistiigi/xx).
+关于`xx` 工具的信息，请查看[tonistiigi/xx](xx-tool.md).
 
 - **本地构建完，查看镜像信息**
 

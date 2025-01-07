@@ -1,11 +1,11 @@
-# Docker Fundamentals
-- [Docker Docs](https://docs.docker.com/manuals/)
+# Docker 基础
+- [Docker 文档](https://docs.docker.com/manuals/)
 
-## What is covered as part of Docker Fundamentals?
-1. Docker Introduction
-2. Docker Installation
-3. Flow-1: Pull from Docker Hub and Run Docker Image locally.
-4. Flow-2: Build new Docker Image and Run locally and Push to Docker Hub.
-5. Flow-3: Build iamge using multi stages.
-6. Flow-4: Build iamge using multi platform.
-7. Essential Docker Commands
+## Docker 基础涵盖哪些内容？
+1. Docker 简介
+2. Docker 安装
+3. 流程 1：从 Docker Hub 拉取镜像并在本地运行。
+4. 流程 2：构建新的 Docker 镜像并在本地运行并推送到 Docker Hub。
+5. 流程 3：使用多阶段构建镜像。
+6. 流程 4：使用多平台构建镜像。
+7. 基本 Docker 命令

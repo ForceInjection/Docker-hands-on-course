@@ -4,7 +4,7 @@
 - [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
 - [Multi-platform builds](https://docs.docker.com/build/building/multi-platform/)
 
-# 安装 docker buildx
+## 安装 docker buildx
 
 Linux x86_64 上安装 docker buildx:
 
@@ -14,7 +14,7 @@ curl -SL https://github.com/docker/buildx/releases/latest/download/docker-buildx
 chmod +x ~/.docker/cli-plugins/docker-buildx
 ```
 
-# 多平台构建
+## 多平台构建
 
 采用了多步构建，详细参考[**Dockerfile**](Dockerfile-multi-platform).
 
@@ -118,9 +118,10 @@ docker buildx build -f Dockerfile-multi-platform --platform linux/amd64,linux/ar
  => => pushing manifest for docker.io/grissomsh/go-multi-platform:latest@sha256:34ba25bbc06506f35f6ebbf7063f0f1c1107834c12aa554703cb62bb771dc57f                                                                 5.5s
  => [auth] grissomsh/go-multi-platform:pull,push token for registry-1.docker.io
 ```
+
 可以访问[docker hub](https://hub.docker.com/repository/docker/grissomsh/go-multi-platform/general)查看镜像信息。
 
-# 验证
+## 验证
 
 如果在 x86 上运行 arm，会出现`exec format error`报错信息
 

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Docker 动手教程</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            height: 720px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+        }
+
+        .docker-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .docker-shape {
+            position: absolute;
+            border-radius: 8px;
+            background: #0db7ed;
+            opacity: 0.6;
+            transform: rotate(var(--rotation));
+        }
+
+        .shape1 {
+            width: 180px;
+            height: 120px;
+            top: 10%;
+            left: 5%;
+            --rotation: -15deg;
+        }
+
+        .shape2 {
+            width: 140px;
+            height: 140px;
+            bottom: 15%;
+            right: 10%;
+            --rotation: 20deg;
+        }
+
+        .shape3 {
+            width: 100px;
+            height: 160px;
+            top: 20%;
+            right: 15%;
+            --rotation: -5deg;
+        }
+
+        .shape4 {
+            width: 120px;
+            height: 100px;
+            bottom: 10%;
+            left: 15%;
+            --rotation: 10deg;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+
+        .whale-icon {
+            font-size: 6rem;
+            margin-bottom: 1.5rem;
+            color: #0db7ed;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        .main-title {
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+
+        .docker-wave {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to top, rgba(13, 183, 237, 0.1) 0%, rgba(13, 183, 237, 0) 100%);
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Docker-inspired background shapes -->
+        <div class="docker-shapes">
+            <div class="docker-shape shape1"></div>
+            <div class="docker-shape shape2"></div>
+            <div class="docker-shape shape3"></div>
+            <div class="docker-shape shape4"></div>
+        </div>
+        <!-- Content -->
+        <div class="content-wrapper flex flex-col items-center justify-center h-full text-white px-12">
+            <div class="whale-icon">
+                <i class="fas fa-whale"></i>
+            </div>
+            <h1 class="main-title text-6xl font-bold mb-6 text-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                Docker 动手教程
+            </h1>
+            <p class="subtitle text-2xl mb-8 text-center font-light">
+                从零开始掌握 Docker 容器技术的完整实战指南
+            </p>
+            <div class="mt-12 flex flex-wrap justify-center gap-6">
+                <div class="text-center px-4">
+                    <i class="fas fa-code text-blue-400 text-3xl mb-3"></i>
+                    <p class="text-lg">实战操作</p>
+                </div>
+                <div class="text-center px-4">
+                    <i class="fas fa-layer-group text-blue-400 text-3xl mb-3"></i>
+                    <p class="text-lg">镜像构建</p>
+                </div>
+                <div class="text-center px-4">
+                    <i class="fas fa-terminal text-blue-400 text-3xl mb-3"></i>
+                    <p class="text-lg">命令掌握</p>
+                </div>
+                <div class="text-center px-4">
+                    <i class="fas fa-network-wired text-blue-400 text-3xl mb-3"></i>
+                    <p class="text-lg">容器管理</p>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-0 right-0 text-center">
+                <p class="text-gray-300">
+                    <i class="fas fa-rocket text-orange-500 mr-2"></i>
+                    适用于开发者、运维人员和技术爱好者的容器技术指南
+                </p>
+            </div>
+        </div>
+        <!-- Bottom wave effect -->
+        <div class="docker-wave"></div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

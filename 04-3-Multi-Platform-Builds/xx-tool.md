@@ -93,7 +93,6 @@ TARGETVARIANT=
 
 这些脚本允许管理软件包（通常是安装新软件包）来自 Alpine 或 Debian 仓库。它们可以被调用，并接受常规 `apk` 或 `apt/apt-get` 命令接受的任何参数。如果为非原生架构交叉编译，将自动添加目标架构的仓库，并且从那里安装软件包。在 Alpine 上，不允许在同一个根目录下为不同架构安装软件包，因此 `xx-apk` 在次级根目录 `/${triple}` 下安装软件包。这些脚本旨在安装编译器可能需要的头文件和库。为了避免不必要的垃圾，安装时会跳过非原生二进制文件下的 `*/bin`。
 
-
 ```dockerfile
 alpine
 
@@ -241,6 +240,7 @@ aarch64-alpine-linux-musl
 ## Autotools
 
 Autotools 内置了对交叉编译的支持，通过将 `--host`、`--build` 和 `--target` 标志传递给 `configure` 脚本来实现。`--host` 定义构建结果的目标体系结构，`--build` 定义编译器的本机体系结构（用于编译辅助工具等），`--target` 定义二进制文件作为其他二进制文件的编译器运行时返回的体系结构。通常，只需要 `--host`。
+
 ```dockerfile
 ...
 
@@ -273,7 +273,7 @@ RUN ./configure --with-cc=$(xx-clang --print-target-triple)-clang ...
 
 为了使 CMake 交叉编译更容易，xx-clang 有一个特殊标志 `xx-clang --print-cmake-defines`。运行该命令将返回以下 Cmake 定义：
 
-```
+```text
 -DCMAKE_C_COMPILER=clang
 -DCMAKE_CXX_COMPILER=clang++
 -DCMAKE_ASM_COMPILER=clang
@@ -294,6 +294,7 @@ RUN mkdir build && cd build && \
 ```
 
 ## Go / Cgo
+
 可以使用 `xx-go` 包装器来构建 Go，它会自动设置 `GOOS`、`GOARCH`、`GOARM`、`GOAMD64` 等的值。如果使用 CGo 构建，它还会设置 `pkg-config` 和 C 编译器。请注意，默认情况下，在为本机架构编译时，Go 中启用 CGo，而在交叉编译时禁用。这很容易产生意外结果；因此，您应该始终定义 `CGO_ENABLED=1` 或 `CGO_ENABLED=0`，具体取决于您是否希望编译使用 CGo。
 
 ```dockerfile

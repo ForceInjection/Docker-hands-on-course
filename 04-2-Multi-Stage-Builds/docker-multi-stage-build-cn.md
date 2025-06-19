@@ -54,7 +54,7 @@ _`Go` 应用程序 `Dockerfile` 的错误示范。_
 trivy image -q golang:1.23
 ```
 
-```
+```text
 golang:1.23 (debian 12.7)
 
 Total: 799 (UNKNOWN: 0, LOW: 240, MEDIUM: 459, HIGH: 98, CRITICAL: 2)
@@ -122,7 +122,6 @@ docker cp $(docker create build:v1):/app/.output .
 
 第二个 `Dockerfile`(`Dockerfile.run`) 将以 `FROM <runtime-image>` 开头，并简单地将构建的应用从主机复制到其未来的运行时环境中：
 
-
 ```bash
 FROM node:22-slim
 
@@ -175,7 +174,7 @@ docker build -t app:v1 -f Dockerfile.run .
 COPY host/path/to/file image/path/to/file
 ```
 
-然而，你也可以[直接从其他镜像中复制文件](https://docs.docker.com/reference/dockerfile/#copy---from) 
+然而，你也可以[直接从其他镜像中复制文件](https://docs.docker.com/reference/dockerfile/#copy---from)
 
 以下是一个示例，它将 `nginx.conf` 文件从 `Docker Hub` 的 `nginx:latest` 镜像复制到当前正在构建的镜像中：
 
@@ -557,7 +556,7 @@ CMD ["myapp"]
 
 `Java` 应用程序使用 `Maven` 或 `Gradle` 等构建工具从源代码编译，并需要 `Java` 运行时环境（`JRE`）来执行。
 
-对于容器化的 `Java` 应用程序，通常为构建和运行时阶段使用不同的基础镜像。构建阶段需要 `Java `开发工具包（`JDK`），其中包含编译和打包代码的工具，而运行时阶段通常只需要更小、更轻量级的 `Java` 运行时环境（`JRE`）来执行。
+对于容器化的 `Java` 应用程序，通常为构建和运行时阶段使用不同的基础镜像。构建阶段需要 `Java`开发工具包（`JDK`），其中包含编译和打包代码的工具，而运行时阶段通常只需要更小、更轻量级的 `Java` 运行时环境（`JRE`）来执行。
 
 #### 多阶段构建示例：Java 应用程序
 

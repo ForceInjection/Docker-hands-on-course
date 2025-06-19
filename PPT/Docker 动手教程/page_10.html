@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>自定义镜像构建实战</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .step-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #0db7ed;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            background: #0db7ed;
+            color: #1a2a32;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+
+        .code-block {
+            background: #282c34;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .html-highlight {
+            color: #f07178;
+        }
+
+        .tag-highlight {
+            color: #56b6c2;
+        }
+
+        .attr-highlight {
+            color: #c678dd;
+        }
+
+        .comment-highlight {
+            color: #618288;
+            font-style: italic;
+        }
+
+        .docker-highlight {
+            color: #61afef;
+        }
+
+        .step-icon {
+            font-size: 1.5rem;
+            color: #0db7ed;
+            margin-right: 0.75rem;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                自定义镜像构建实战
+            </h1>
+            <p class="text-xl mt-2 text-gray-300">通过 Web 应用实例，演示从项目创建到 Dockerfile 编写</p>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-1 gap-4">
+                <!-- Step 1: Project Structure -->
+                <div class="step-card">
+                    <div class="flex items-center mb-2">
+                        <div class="step-number">1</div>
+                        <h3 class="text-xl font-semibold flex items-center">
+                            <i class="fas fa-folder step-icon"></i>
+                            创建项目结构
+                        </h3>
+                    </div>
+                    <div class="code-block">
+                        <div class="comment-highlight"># 创建并进入项目目录</div>
+                        <span class="html-highlight">mkdir</span> my-web-app <span
+                            class="html-highlight">&amp;&amp;</span> <span class="html-highlight">cd</span> my-web-app
+                    </div>
+                </div>
+                <!-- Step 2: Create Webpage -->
+                <div class="step-card">
+                    <div class="flex items-center mb-2">
+                        <div class="step-number">2</div>
+                        <h3 class="text-xl font-semibold flex items-center">
+                            <i class="fas fa-file-code step-icon"></i>
+                            编写自定义网页
+                        </h3>
+                    </div>
+                    <div class="code-block">
+                        <span class="tag-highlight">
+
+                        </span>
+                        <span class="tag-highlight"></span>
+                        <span class="tag-highlight"></span>
+                        <span class="attr-highlight">
+                            <title></title>
+                        </span>我的 Docker Web 应用<span class="attr-highlight"></span>
+                        <span class="tag-highlight"></span>
+                        <span class="tag-highlight"></span>
+                        <span class="tag-highlight">
+                            <div></div>
+                        </span> <span class="attr-highlight">class</span>=<span
+                            class="html-highlight">&#34;container&#34;</span>
+                        <span class="tag-highlight">
+                            <h1></h1>
+                        </span>欢迎使用 Docker!<span class="tag-highlight"></span>
+                        <span class="tag-highlight">
+                            <p></p>
+                        </span>这是我的第一个 <span class="html-highlight">&lt;span</span> <span
+                            class="attr-highlight">class</span>=<span class="html-highlight">&#34;highlight&#34;</span>
+                        <span class="html-highlight">&gt;</span>自定义 Docker 镜像<span
+                            class="html-highlight">&lt;/span&gt;</span><span class="tag-highlight"></span>
+                        <span class="tag-highlight">
+                            <p></p>
+                        </span>构建时间: <span class="html-highlight">&lt;span</span> <span
+                            class="attr-highlight">id</span>=<span class="html-highlight">&#34;buildTime&#34;</span>
+                        <span class="html-highlight">&gt;&lt;/span&gt;</span><span class="tag-highlight"></span>
+                        <span class="tag-highlight">
+                            <div></div>
+                        </span>
+                        <span class="tag-highlight">
+                            <script></script>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

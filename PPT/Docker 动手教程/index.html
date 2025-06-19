@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Docker 动手教程 - PPT模式</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide-container {
+            max-width: 1280px;
+            width: 100%;
+            min-height: 720px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }  .page-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .page-card:hover {
+            transform: translateY(-5px);
+            border-left-color: #3b82f6;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+        }
+        
+        .start-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            transition: all 0.3s ease;
+        }
+        
+        .start-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: scale(1.05);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(249, 115, 22, 0.2));
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <div class="course-container mx-auto p-8">
+        <!-- 头部标题 -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold mb-4 text-blue-500">
+                <i class="fab fa-docker mr-4"></i>
+                Docker 动手教程
+            </h1>
+            <h2 class="text-3xl font-semibold mb-6 text-orange-500">从零开始掌握 Docker 容器技术的完整实战指南</h2>
+            <p class="text-xl text-gray-400">PPT演示模式 - 交互式课程体验</p>
+        </div>
+
+        <!-- 课程大纲 -->
+        <div class="bg-slate-800 rounded-lg p-8">
+            <h3 class="text-2xl font-semibold mb-6 text-center text-blue-500">
+                <i class="fas fa-list-ul mr-3"></i>
+                课程大纲
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- 页面列表将通过JavaScript动态生成 -->
+                <div id="page-list" class="col-span-full">
+                    <!-- 页面卡片将在这里生成 -->
+                </div>
+            </div>
+        </div>
+        <!-- 快捷键说明 -->
+        <div class="mt-12 bg-slate-800 rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4 text-orange-500">
+                <i class="fas fa-keyboard mr-2"></i>
+                快捷键说明
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                <div class="flex items-center">
+                    <kbd class="bg-slate-700 px-2 py-1 rounded mr-2">F5</kbd>
+                    <span>切换PPT模式</span>
+                </div>
+                <div class="flex items-center">
+                    <kbd class="bg-slate-700 px-2 py-1 rounded mr-2">← →</kbd>
+                    <span>上一页/下一页</span>
+                </div>
+                <div class="flex items-center">
+                    <kbd class="bg-slate-700 px-2 py-1 rounded mr-2">Space</kbd>
+                    <span>下一页</span>
+                </div>
+                <div class="flex items-center">
+                    <kbd class="bg-slate-700 px-2 py-1 rounded mr-2">F11</kbd>
+                    <span>全屏切换</span>
+                </div>
+                <div class="flex items-center">
+                    <kbd class="bg-slate-700 px-2 py-1 rounded mr-2">O</kbd>
+                    <span>页面概览</span>
+                </div>
+                <div class="flex items-center">
+                    <kbd class="bg-slate-700 px-2 py-1 rounded mr-2">ESC</kbd>
+                    <span>退出模式</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 课程统计信息 -->
+        <div class="mt-12 bg-slate-800 rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-4 text-green-500">
+                <i class="fas fa-chart-bar mr-2"></i>
+                课程统计
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+                <div class="bg-slate-700 p-4 rounded-lg">
+                    <div class="text-2xl font-bold text-blue-500">18</div>
+                    <div class="text-sm text-gray-400">总页数</div>
+                </div>
+                <div class="bg-slate-700 p-4 rounded-lg">
+                    <div class="text-2xl font-bold text-green-500">6</div>
+                    <div class="text-sm text-gray-400">Docker 基础</div>
+                </div>
+                <div class="bg-slate-700 p-4 rounded-lg">
+                    <div class="text-2xl font-bold text-yellow-500">2</div>
+                    <div class="text-sm text-gray-400">镜像容器操作</div>
+                </div>
+                <div class="bg-slate-700 p-4 rounded-lg">
+                    <div class="text-2xl font-bold text-purple-500">3</div>
+                    <div class="text-sm text-gray-400">镜像构建</div>
+                </div>
+                <div class="bg-slate-700 p-4 rounded-lg">
+                    <div class="text-2xl font-bold text-red-500">7</div>
+                    <div class="text-sm text-gray-400">命令掌握+总结</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 版权信息 -->
+        <div class="text-center mt-8 text-gray-500">
+            <p>&copy; 2024 Docker 动手教程. All rights reserved.</p>
+            <p class="text-sm mt-2">本教程旨在帮助学习者从零开始掌握 Docker 容器技术的完整实战技能</p>
+        </div>
+    </div>
+
+    <script>
+        // 页面信息配置
+        const pageInfo = [
+            // 模块一：Docker 基础入门 (1-6)
+            { num: 1, title: "Docker 动手教程", desc: "从零开始掌握 Docker 容器技术的完整实战指南", category: "Docker 基础" },
+            { num: 2, title: "学习目标与路径", desc: "Docker 学习目标和完整学习路径规划", category: "Docker 基础" },
+            { num: 3, title: "Docker 基础概念", desc: "容器技术基础概念和核心原理", category: "Docker 基础" },
+            { num: 4, title: "Docker vs 虚拟机", desc: "容器技术与传统虚拟化技术的对比分析", category: "Docker 基础" },
+            { num: 5, title: "Docker 架构组件", desc: "Docker 系统架构和核心组件详解", category: "Docker 基础" },
+            { num: 6, title: "环境安装配置", desc: "Docker 环境安装和基础配置指南", category: "Docker 基础" },
+
+            // 模块二：镜像与容器操作 (7-8)
+            { num: 7, title: "镜像拉取与运行", desc: "Docker 镜像的拉取、查看和基础运行操作", category: "镜像容器操作" },
+            { num: 8, title: "容器运行管理", desc: "容器的创建、启动、停止和生命周期管理", category: "镜像容器操作" },
+            
+            // 模块三：自定义镜像构建 (9-11)
+            { num: 9, title: "Dockerfile 基础", desc: "Dockerfile 语法和镜像构建基础", category: "镜像构建" },
+            { num: 10, title: "自定义镜像构建实战", desc: "实战构建自定义应用镜像", category: "镜像构建" },
+            { num: 11, title: "镜像构建与发布", desc: "镜像优化、构建和发布到仓库", category: "镜像构建" },
+            
+            // 模块四：核心命令掌握 (12-15)
+            { num: 12, title: "容器管理核心命令", desc: "容器操作的核心命令和实用技巧", category: "命令掌握" },
+            { num: 13, title: "镜像管理核心命令", desc: "镜像操作的核心命令和管理技巧", category: "命令掌握" },
+            { num: 14, title: "网络与存储管理", desc: "Docker 网络和数据卷管理", category: "命令掌握" },
+            { num: 15, title: "实用技巧与最佳实践", desc: "Docker 使用技巧和生产环境最佳实践", category: "命令掌握" },
+            
+            // 模块五：学习资源与总结 (16-18)
+            { num: 16, title: "学习资源与推荐工具", desc: "Docker 学习资源和实用工具推荐", category: "学习总结" },
+            { num: 17, title: "常见问题解答", desc: "Docker 使用过程中的常见问题和解决方案", category: "学习总结" },
+            { num: 18, title: "总结与下一步", desc: "课程总结和进阶学习建议", category: "学习总结" }
+        ];
+
+        // 生成页面列表
+        function generatePageList() {
+            const pageList = document.getElementById('page-list');
+            
+            // 按模块分组
+            const moduleGroups = {};
+            pageInfo.forEach(page => {
+                if (!moduleGroups[page.category]) {
+                    moduleGroups[page.category] = [];
+                }
+                moduleGroups[page.category].push(page);
+            });
+            
+            // 为每个模块创建分组
+            Object.keys(moduleGroups).forEach(category => {
+                // 创建模块标题
+                const moduleTitle = document.createElement('div');
+                moduleTitle.className = 'mb-4 mt-8 first:mt-0';
+                moduleTitle.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2 border-b-2 border-blue-500 pb-2">
+                        ${category}
+                    </h3>
+                `;
+                pageList.appendChild(moduleTitle);
+                
+                // 创建该模块的页面网格
+                const gridContainer = document.createElement('div');
+                gridContainer.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6';
+                
+                moduleGroups[category].forEach(page => {
+                     const pageCard = document.createElement('div');
+                     pageCard.className = 'page-card bg-slate-700 p-4 rounded-lg cursor-pointer';
+                     pageCard.innerHTML = `
+                        <div class="flex items-center mb-2">
+                            <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm font-semibold mr-3">
+                                ${page.num}
+                            </span>
+                            <h4 class="font-semibold text-white">${page.title}</h4>
+                        </div>
+                        <p class="text-gray-400 text-sm">${page.desc}</p>
+                        <div class="mt-2">
+                            <span class="inline-block bg-gray-600 text-gray-300 px-2 py-1 rounded-full text-xs">
+                                ${page.category}
+                            </span>
+                        </div>
+                    `;
+                    pageCard.addEventListener('click', () => goToPage(page.num));
+                    gridContainer.appendChild(pageCard);
+                });
+                
+                pageList.appendChild(gridContainer);
+            });
+        }
+
+        // 跳转到指定页面
+        function goToPage(pageNum) {
+            window.location.href = `page_${pageNum}.html`;
+        }
+
+        // 开始演示
+        function startPresentation() {
+            window.location.href = 'page_1.html';
+        }
+
+        // 计算统计信息
+        const totalPages = 18;
+        const categories = {
+            "Docker 基础": 6,
+            "镜像容器操作": 2,
+            "镜像构建": 3,
+            "命令掌握": 4,
+            "学习总结": 3
+        };
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            generatePageList();
+        });
+    </script>
+</body>
+</html>

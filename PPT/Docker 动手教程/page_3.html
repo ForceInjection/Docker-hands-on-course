@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Docker 基础概念</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 874px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .challenge-item,
+        .concept-item {
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(13, 183, 237, 0.1);
+            border-left: 4px solid #0db7ed;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-item:hover,
+        .concept-item:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+
+        }
+
+        .comparison-table th {
+            background-color: rgba(13, 183, 237, 0.7);
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table tr:nth-child(odd) td {
+            background-color: rgba(13, 183, 237, 0.1);
+        }
+
+        .comparison-table tr:nth-child(even) td {
+            background-color: rgba(13, 183, 237, 0.05);
+        }
+
+        .docker-component {
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(13, 183, 237, 0.1);
+            border: 2px solid #0db7ed;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .docker-component:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: scale(1.05);
+        }
+
+        .component-arrow {
+            color: #0db7ed;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                Docker 基础概念
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Left Column -->
+                <div>
+                    <!-- Traditional Challenges -->
+                    <h2 class="text-2xl font-semibold mb-3 flex items-center">
+                        <i class="fas fa-exclamation-triangle text-yellow-400 mr-2"></i>
+                        传统基础设施的挑战
+                    </h2>
+                    <div class="space-y-2 mb-4">
+                        <div class="challenge-item flex items-start">
+                            <i class="fas fa-random text-yellow-400 mt-1 mr-3"></i>
+                            <span>环境一致性问题：&#34;在我机器上能运行&#34;综合症</span>
+                        </div>
+                        <div class="challenge-item flex items-start">
+                            <i class="fas fa-server text-yellow-400 mt-1 mr-3"></i>
+                            <span>资源利用率低：虚拟机开销大，硬件资源浪费</span>
+                        </div>
+                        <div class="challenge-item flex items-start">
+                            <i class="fas fa-cogs text-yellow-400 mt-1 mr-3"></i>
+                            <span>部署扩展困难：手动配置复杂，扩展性差</span>
+                        </div>
+                    </div>
+                    <!-- Comparison Table -->
+                    <h2 class="text-2xl font-semibold mb-3 flex items-center">
+                        <i class="fas fa-balance-scale text-blue-400 mr-2"></i>
+                        Docker vs 虚拟机
+                    </h2>
+                    <table class="comparison-table mb-4">
+                        <thead>
+                            <tr>
+                                <th>特性</th>
+                                <th>传统虚拟机</th>
+                                <th>Docker 容器</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>启动时间</td>
+                                <td>分钟级</td>
+                                <td class="text-green-400 font-semibold">秒级</td>
+                            </tr>
+                            <tr>
+                                <td>资源消耗</td>
+                                <td>高（完整OS）</td>
+                                <td class="text-green-400 font-semibold">低（共享内核）</td>
+                            </tr>
+                            <tr>
+                                <td>隔离级别</td>
+                                <td>硬件级隔离</td>
+                                <td>进程级隔离</td>
+                            </tr>
+                            <tr>
+                                <td>可移植性</td>
+                                <td>差</td>
+                                <td class="text-green-400 font-semibold">优秀</td>
+                            </tr>
+                            <tr>
+                                <td>管理复杂度</td>
+                                <td>高</td>
+                                <td class="text-green-400 font-semibold">低</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Right Column -->
+                <div>
+                    <!-- Docker Architecture Components -->
+                    <h2 class="text-2xl font-semibold mb-3 flex items-center">
+                        <i class="fas fa-cubes text-blue-400 mr-2"></i>
+                        Docker 架构组件
+                    </h2>
+                    <!-- Architecture Diagram -->
+                    <div class="grid grid-cols-3 gap-3 mb-4">
+                        <div class="docker-component col-span-1">
+                            <i class="fas fa-desktop text-blue-400 mb-1"></i>
+                            <div>Docker CLI<br />(客户端)</div>
+                        </div>
+                        <div class="docker-component col-span-1">
+                            <i class="fas fa-window-maximize text-blue-400 mb-1"></i>
+                            <div>Docker Desktop<br />(图形界面)</div>
+                        </div>
+                        <div class="component-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 mb-4">
+                        <div class="docker-component col-span-3">
+                            <i class="fas fa-cogs text-blue-400 mb-1"></i>
+                            <div>Docker Daemon (dockerd)</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 mb-1">
+                        <div class="docker-component">
+                            <i class="fas fa-file-archive text-blue-400 mb-1"></i>
+                            <div>Images<br />(镜像)</div>
+                        </div>
+                        <div class="docker-component">
+                            <i class="fab fa-docker text-blue-400 mb-1"></i>
+                            <div>Containers<br />(容器)</div>
+                        </div>
+                        <div class="docker-component">
+                            <i class="fas fa-database text-blue-400 mb-1"></i>
+                            <div>Volumes<br />(数据卷)</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 mb-4">
+                        <div></div>
+                        <div class="docker-component">
+                            <i class="fas fa-network-wired text-blue-400 mb-1"></i>
+                            <div>Networks<br />(网络管理)</div>
+                        </div>
+                        <div></div>
+                    </div>
+                    <!-- Core Concepts -->
+                    <h2 class="text-2xl font-semibold mb-3 flex items-center">
+                        <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+                        核心概念理解
+                    </h2>
+                    <div class="space-y-2">
+                        <div class="concept-item flex items-start">
+                            <i class="fas fa-file-archive text-blue-400 mt-1 mr-3"></i>
+                            <span><strong>Docker Images (镜像)</strong>：只读模板，采用分层存储</span>
+                        </div>
+                        <div class="concept-item flex items-start">
+                            <i class="fab fa-docker text-blue-400 mt-1 mr-3"></i>
+                            <span><strong>Docker Containers (容器)</strong>：镜像的运行实例</span>
+                        </div>
+                        <div class="concept-item flex items-start">
+                            <i class="fas fa-cloud text-blue-400 mt-1 mr-3"></i>
+                            <span><strong>Docker Registry (仓库)</strong>：镜像存储和分发中心</span>
+                        </div>
+                        <div class="concept-item flex items-start">
+                            <i class="fas fa-file-code text-blue-400 mt-1 mr-3"></i>
+                            <span><strong>Dockerfile</strong>：构建镜像的指令文件</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            3 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>容器管理核心命令</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 799px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .command-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #0db7ed;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .command-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .command-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #f8f8f2;
+            overflow: auto;
+        }
+
+        .command {
+            color: #f8f8f2;
+        }
+
+        .comment {
+            color: #7f8c8d;
+        }
+
+        .category-icon {
+            background: rgba(13, 183, 237, 0.2);
+            border: 2px solid #0db7ed;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .category-title {
+            font-weight: 600;
+            color: #0db7ed;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                容器管理核心命令
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Container Viewing Commands -->
+                <div class="command-card">
+                    <div class="flex items-center mb-3">
+                        <div class="category-icon">
+                            <i class="fas fa-eye text-blue-400"></i>
+                        </div>
+                        <h2 class="category-title text-xl">容器查看</h2>
+                    </div>
+                    <div class="command-block">
+                        <div class="command">docker ps # 运行中的容器</div>
+                        <div class="command">docker ps -a # 所有容器</div>
+                        <div class="command">docker ps -q # 仅显示容器ID</div>
+                    </div>
+                </div>
+                <!-- Container Control Commands -->
+                <div class="command-card">
+                    <div class="flex items-center mb-3">
+                        <div class="category-icon">
+                            <i class="fas fa-power-off text-blue-400"></i>
+                        </div>
+                        <h2 class="category-title text-xl">容器控制</h2>
+                    </div>
+                    <div class="command-block">
+                        <div class="command">docker stop container_id # 优雅停止</div>
+                        <div class="command">docker kill container_id # 强制停止</div>
+                        <div class="command">docker start container_id # 启动容器</div>
+                        <div class="command">docker restart container_id # 重启容器</div>
+                        <div class="command">docker pause container_id # 暂停容器</div>
+                        <div class="command">docker unpause container_id # 恢复容器</div>
+                    </div>
+                </div>
+                <!-- Container Cleanup Commands -->
+                <div class="command-card">
+                    <div class="flex items-center mb-3">
+                        <div class="category-icon">
+                            <i class="fas fa-trash-alt text-blue-400"></i>
+                        </div>
+                        <h2 class="category-title text-xl">容器清理</h2>
+                    </div>
+                    <div class="command-block">
+                        <div class="command">docker rm container_id # 删除容器</div>
+                        <div class="command">docker rm -f container_id # 强制删除</div>
+                        <div class="command">docker container prune # 清理停止的容器</div>
+                    </div>
+                </div>
+                <!-- Container Interaction Commands -->
+                <div class="command-card">
+                    <div class="flex items-center mb-3">
+                        <div class="category-icon">
+                            <i class="fas fa-terminal text-blue-400"></i>
+                        </div>
+                        <h2 class="category-title text-xl">容器交互</h2>
+                    </div>
+                    <div class="command-block">
+                        <div class="command">docker exec -it container_name /bin/bash</div>
+                        <div class="command">docker exec -it container_name /bin/sh</div>
+                        <div class="command">docker exec container_name ls -la</div>
+                        <div class="command">docker cp ./file.txt container_name:/path/</div>
+                        <div class="command">docker cp container_name:/path/file.txt .</div>
+                        <div class="command">docker logs container_name</div>
+                        <div class="command">docker logs -f container_name # 实时查看</div>
+                        <div class="command">docker logs --tail 100 container_name # 最后100行</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tips Section -->
+            <div class="mt-6 bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-800">
+                <div class="flex items-start">
+                    <i class="fas fa-lightbulb text-yellow-400 text-xl mt-1 mr-3"></i>
+                    <div>
+                        <h3 class="font-semibold text-blue-300 mb-1">实用技巧</h3>
+                        <p class="text-sm">使用 <span class="text-blue-300">docker ps -q</span> 可以获取所有运行中容器的ID，方便进行批量操作。
+                        </p>
+                        <p class="text-sm mt-1">例如：停止所有容器 <span class="text-blue-300">docker stop $(docker ps -q)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            12 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

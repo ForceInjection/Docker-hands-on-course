@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>镜像管理核心命令</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 789px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .command-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #0db7ed;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .command-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .command-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .command-icon {
+            background: rgba(13, 183, 237, 0.2);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+        }
+
+        .command-code {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .command-desc {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                镜像管理核心命令
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Left Column: Image Viewing &amp; Operations -->
+                <div>
+                    <!-- Image Viewing Commands -->
+                    <div class="command-card">
+                        <div class="command-title">
+                            <div class="command-icon">
+                                <i class="fas fa-search text-blue-400"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">镜像查看</h3>
+                        </div>
+                        <div class="command-code">
+                            docker images<br />
+                            docker images -q<br />
+                            docker images --format &#34;table {{.Repository}}\t{{.Tag}}\t{{.Size}}&#34;
+                        </div>
+                        <div class="command-desc">
+                            查看本地镜像列表，显示仓库名、标签和大小
+                        </div>
+                    </div>
+                    <!-- Image Operations -->
+                    <div class="command-card">
+                        <div class="command-title">
+                            <div class="command-icon">
+                                <i class="fas fa-exchange-alt text-blue-400"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">镜像操作</h3>
+                        </div>
+                        <div class="command-code">
+                            docker pull <span class="highlight">image_name:tag</span><br />
+                            docker push <span class="highlight">image_name:tag</span><br />
+                            docker rmi <span class="highlight">image_id</span><br />
+                            docker rmi -f <span class="highlight">image_id</span>
+                        </div>
+                        <div class="command-desc">
+                            拉取、推送、删除镜像，-f 选项可强制删除
+                        </div>
+                    </div>
+                    <!-- Image Building -->
+                    <div class="command-card">
+                        <div class="command-title">
+                            <div class="command-icon">
+                                <i class="fas fa-hammer text-blue-400"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">镜像构建</h3>
+                        </div>
+                        <div class="command-code">
+                            docker build -t <span class="highlight">image_name:tag</span> .<br />
+                            docker build --no-cache -t <span class="highlight">image_name:tag</span> .<br />
+                            docker tag <span class="highlight">source_image</span> <span
+                                class="highlight">target_image</span>
+                        </div>
+                        <div class="command-desc">
+                            构建镜像，--no-cache 可禁用缓存，tag 可为镜像添加新标签
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: Image Cleaning &amp; System Management -->
+                <div>
+                    <!-- Image Cleaning -->
+                    <div class="command-card">
+                        <div class="command-title">
+                            <div class="command-icon">
+                                <i class="fas fa-broom text-blue-400"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">镜像清理</h3>
+                        </div>
+                        <div class="command-code">
+                            docker image prune<br />
+                            docker image prune -a<br />
+                            docker image prune -a --filter &#34;until=<span class="highlight">2021-01-01</span>&#34;
+                        </div>
+                        <div class="command-desc">
+                            删除悬空镜像，-a 可删除所有未使用镜像，--filter 可按时间筛选
+                        </div>
+                    </div>
+                    <!-- System Management Commands -->
+                    <div class="command-card">
+                        <div class="command-title">
+                            <div class="command-icon">
+                                <i class="fas fa-cogs text-blue-400"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">系统管理命令</h3>
+                        </div>
+                        <div class="command-code">
+                            docker info<br />
+                            docker version<br />
+                            docker system df<br />
+                            docker system prune<br />
+                            docker system prune -a
+                        </div>
+                        <div class="command-desc">
+                            系统信息、版本、磁盘使用情况、清理未使用资源
+                        </div>
+                    </div>
+                    <!-- Practical Tips -->
+                    <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg mt-4">
+                        <h4 class="text-lg font-semibold flex items-center">
+                            <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+                            实用技巧
+                        </h4>
+                        <ul class="list-disc pl-6 mt-2 space-y-1">
+                            <li>使用 <span class="highlight">docker images -q</span> 获取镜像ID列表</li>
+                            <li>结合 <span class="highlight">grep</span> 过滤镜像：docker images | grep nginx</li>
+                            <li>使用 <span class="highlight">xargs</span> 批量删除：docker images -q | xargs docker rmi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            13 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

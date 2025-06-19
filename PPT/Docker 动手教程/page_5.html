@@ -156,12 +156,12 @@
                 <!-- Left side: Diagram -->
                 <div class="diagram-left">
                     <!-- Client Components -->
-                    <div class="component" style="width: 180px; height: 100px; top: 40px; left: 100px;">
+                    <div class="component" style="width: 180px; height: 100px; top: 40px; left: 150px;">
                         <i class="fas fa-terminal component-icon"></i>
                         <div class="component-title">Docker CLI</div>
                         <div class="component-desc">命令行客户端</div>
                     </div>
-                    <div class="component" style="width: 180px; height: 100px; top: 40px; left: 340px;">
+                    <div class="component" style="width: 180px; height: 100px; top: 40px; left: 390px;">
                         <i class="fas fa-desktop component-icon"></i>
                         <div class="component-title">Docker Desktop</div>
                         <div class="component-desc">图形用户界面</div>
@@ -170,11 +170,11 @@
                     <div class="connection horizontal" style="width: 240px; top: 170px; left: 190px;"></div>
                     <div class="connection vertical" style="height: 30px; top: 140px; left: 190px;"></div>
                     <div class="connection vertical" style="height: 30px; top: 140px; left: 429px;"></div>
-                    <div class="connection-label" style="top: 172px; left: 280px;">
+                    <div class="connection-label" style="top: 172px; left: 430px;">
                         <i class="fas fa-exchange-alt mr-1"></i> REST API
                     </div>
                     <!-- Docker Daemon -->
-                    <div class="component" style="width: 320px; height: 110px; top: 200px; left: 150px;">
+                    <div class="component" style="width: 320px; height: 110px; top: 200px; left: 320px;">
                         <i class="fas fa-cogs component-icon"></i>
                         <div class="component-title">Docker Daemon (dockerd)</div>
                         <div class="component-desc">Docker 引擎核心，负责构建和运行容器</div>
@@ -200,37 +200,56 @@
                     <!-- Connections between Daemon and Resources -->
                     <div class="connection horizontal" style="width: 110px; top: 410px; left: 150px;"></div>
                     <div class="connection horizontal" style="width: 110px; top: 410px; left: 370px;"></div>
-                    <!-- Network Connection from Containers -->
-                    <div class="connection vertical" style="height: 50px; top: 460px; left: 370px;"></div>
+                    <div class="connection horizontal" style="width: 130px; top: 410px; left: 590px;"></div>
                     <!-- Network -->
-                    <div class="component" style="width: 180px; height: 100px; top: 510px; left: 280px;">
+                    <div class="component" style="width: 180px; height: 100px; top: 360px; left: 720px;">
                         <i class="fas fa-network-wired component-icon"></i>
                         <div class="component-title">Networks</div>
-                        <div class="component-desc">网络管理 - 容器通信</div>
+                        <div class="component-desc">网络 - 虚拟化网络</div>
                     </div>
+                    <!-- Docker Registry -->
+                    <div class="component" style="width: 180px; height: 100px; top: 480px; left: 60px;">
+                        <i class="fas fa-warehouse component-icon"></i>
+                        <div class="component-title">Docker Registry</div>
+                        <div class="component-desc">镜像仓库 - 存储分发</div>
+                    </div>
+                    <!-- Connection from Images to Registry -->
+                    <div class="connection vertical" style="height: 20px; top: 460px; left: 150px;"></div>
+                    <div class="connection horizontal" style="width: 220px; top: 480px; left: 150px;"></div>
+                    <div class="connection vertical" style="height: 20px; top: 480px; left: 370px;"></div>
+                    <!-- Third-party Tools -->
+                    <div class="component" style="width: 180px; height: 100px; top: 40px; left: 630px;">
+                        <i class="fas fa-tools component-icon"></i>
+                        <div class="component-title">Third-party Tools</div>
+                        <div class="component-desc">第三方工具</div>
+                    </div>
+                    <!-- Connection from Third-party Tools to Daemon -->
+                    <div class="connection vertical" style="height: 30px; top: 120px; left: 640px;"></div>
+                    <div class="connection horizontal" style="width: 170px; top: 150px; left: 470px;"></div>
                 </div>
                 <!-- Right side: Component Descriptions -->
                 <div class="diagram-right">
                     <div class="component-description">
-                        <h3>Docker CLI</h3>
-                        <p>命令行工具，用于与 Docker 引擎交互</p>
-                    </div>
-                    <div class="component-description">
-                        <h3>Docker Desktop</h3>
-                        <p>提供易用的图形界面，管理容器和镜像</p>
+                        <h3>客户端工具</h3>
+                        <p>Docker CLI、Desktop 和第三方工具通过 REST API 与 Docker Daemon 通信</p>
                     </div>
                     <div class="component-description">
                         <h3>Docker Daemon</h3>
-                        <p>后台服务，负责构建、运行和分发容器</p>
+                        <p>Docker 引擎核心，负责管理镜像、容器、网络和数据卷</p>
                     </div>
                     <div class="component-description">
-                        <h3>Images & Containers</h3>
-                        <p>镜像是只读模板，容器是镜像的运行实例</p>
+                        <h3>镜像与容器</h3>
+                        <p>镜像是只读模板，容器是镜像的运行实例，提供隔离环境</p>
                     </div>
                     <div class="component-description">
-                        <h3>Volumes & Networks</h3>
-                        <p>数据卷提供持久化存储，网络管理容器间通信</p>
+                        <h3>Docker Registry</h3>
+                        <p>镜像仓库，如 Docker Hub，用于存储和分发 Docker 镜像</p>
                     </div>
+                    <div class="component-description">
+                        <h3>网络与存储</h3>
+                        <p>网络管理容器间通信，数据卷提供持久化存储</p>
+                    </div>
+
                 </div>
             </div>
 

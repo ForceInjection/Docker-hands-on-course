@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>学习资源与推荐工具</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 946px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .resource-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #0db7ed;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .tool-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(13, 183, 237, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .highlight {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            background: rgba(13, 183, 237, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                学习资源与推荐工具
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Left Column: Official Documentation and Practice Projects -->
+                <div>
+                    <!-- Official Documentation -->
+                    <div>
+                        <h2 class="section-title">
+                            <div class="section-icon">
+                                <i class="fas fa-book text-blue-400"></i>
+                            </div>
+                            官方文档
+                        </h2>
+                        <div class="space-y-2">
+                            <div class="resource-card flex items-start">
+                                <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="highlight">Docker 官方文档</span>
+                                    <p class="text-sm text-gray-300">全面的 Docker 使用指南和 API 参考</p>
+                                </div>
+                            </div>
+                            <div class="resource-card flex items-start">
+                                <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="highlight">Docker Hub</span>
+                                    <p class="text-sm text-gray-300">镜像存储和分发中心，包含丰富的官方和用户镜像</p>
+                                </div>
+                            </div>
+                            <div class="resource-card flex items-start">
+                                <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="highlight">Dockerfile 参考</span>
+                                    <p class="text-sm text-gray-300">Dockerfile 指令的详细说明和最佳实践</p>
+                                </div>
+                            </div>
+                            <div class="resource-card flex items-start">
+                                <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="highlight">Docker Compose 文档</span>
+                                    <p class="text-sm text-gray-300">多容器应用编排工具的使用指南</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Practice Projects -->
+                    <div class="mt-6">
+                        <h2 class="section-title">
+                            <div class="section-icon">
+                                <i class="fas fa-laptop-code text-blue-400"></i>
+                            </div>
+                            实践项目建议
+                        </h2>
+                        <div class="space-y-2">
+                            <div class="resource-card flex items-start">
+                                <i class="fas fa-code text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="highlight">Web 应用容器化</span>
+                                    <p class="text-sm text-gray-300">将现有 Web 应用打包成 Docker 镜像</p>
+                                </div>
+                            </div>
+                            <div class="resource-card flex items-start">
+                                <i class="fas fa-network-wired text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="highlight">微服务架构</span>
+                                    <p class="text-sm text-gray-300">使用 Docker Compose 部署多服务应用</p>
+                                </div>
+                            </div>
+                            <div class="resource-card flex items-start">
+                                <i class="fas fa-infinity text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="highlight">CI/CD 集成</span>
+                                    <p class="text-sm text-gray-300">在持续集成流程中使用 Docker</p>
+                                </div>
+                            </div>
+                            <div class="resource-card flex items-start">
+                                <i class="fas fa-users-cog text-blue-400 mt-1 mr-3"></i>
+                                <div>
+                                    <span class="highlight">开发环境标准化</span>
+                                    <p class="text-sm text-gray-300">为团队创建统一的开发环境</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: Recommended Tools -->
+                <div>
+                    <h2 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-tools text-blue-400"></i>
+                        </div>
+                        推荐工具
+                    </h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="tool-card">
+                            <div class="flex items-center mb-2">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
+                                    <i class="fas fa-desktop text-blue-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold">Docker Desktop</h3>
+                            </div>
+                            <p class="text-gray-300">图形化管理界面，适用于开发环境</p>
+                            <div class="mt-2 text-sm">
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">Windows</span>
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">macOS</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="flex items-center mb-2">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
+                                    <i class="fas fa-server text-blue-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold">Portainer</h3>
+                            </div>
+                            <p class="text-gray-300">Web 端容器管理界面，支持多种 Docker 环境</p>
+                            <div class="mt-2 text-sm">
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">Web
+                                    UI</span>
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">开源</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="flex items-center mb-2">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
+                                    <i class="fas fa-drafting-compass text-blue-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold">Docker Compose</h3>
+                            </div>
+                            <p class="text-gray-300">多容器应用编排工具，定义和运行多容器 Docker 应用</p>
+                            <div class="mt-2 text-sm">
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">YAML</span>
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">命令行</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="flex items-center mb-2">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
+                                    <i class="fas fa-sync-alt text-blue-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold">Watchtower</h3>
+                            </div>
+                            <p class="text-gray-300">自动更新容器镜像，保持应用最新状态</p>
+                            <div class="mt-2 text-sm">
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">自动更新</span>
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">轻量级</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-blue-900 bg-opacity-30 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-lightbulb text-yellow-400 text-xl mr-3"></i>
+                            <p class="text-sm">工具选择建议：根据实际需求选择合适的工具组合，初学者可从 Docker Desktop 开始，逐步过渡到更专业的工具</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            16 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

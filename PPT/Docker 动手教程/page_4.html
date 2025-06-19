@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Docker vs 虚拟机</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 738px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .compare-item {
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .compare-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .vm-side {
+            background: rgba(255, 102, 0, 0.1);
+            border-left: 4px solid #ff6600;
+        }
+
+        .docker-side {
+            background: rgba(13, 183, 237, 0.1);
+            border-left: 4px solid #0db7ed;
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .vs-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #f2f2f2;
+        }
+
+        .vs-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6600, #0db7ed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 1rem;
+        }
+
+        .highlight-vm {
+            color: #ff6600;
+            font-weight: 600;
+        }
+
+        .highlight-docker {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+
+        .comparison-row {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-label {
+            width: 18%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.5rem;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                Docker vs 虚拟机
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Title Section with Icons -->
+            <div class="flex justify-center items-center mb-8">
+                <div class="text-center mr-6">
+                    <i class="fab fa-docker text-5xl text-blue-400 mb-2"></i>
+                    <h3 class="text-2xl font-bold text-blue-400">Docker 容器</h3>
+                </div>
+                <div class="vs-circle">VS</div>
+                <div class="text-center ml-6">
+                    <i class="fas fa-server text-5xl text-orange-500 mb-2"></i>
+                    <h3 class="text-2xl font-bold text-orange-500">传统虚拟机</h3>
+                </div>
+            </div>
+            <!-- Comparison Section -->
+            <div class="comparison-container">
+                <!-- Startup Time -->
+                <div class="comparison-row">
+                    <div class="feature-label">
+                        <i class="fas fa-clock text-gray-300 mb-1"></i>
+                        <span>启动时间</span>
+                    </div>
+                    <div class="flex flex-1">
+                        <div class="vm-side flex-1 mr-2">
+                            <h4 class="font-semibold mb-1">传统虚拟机</h4>
+                            <p><span class="highlight-vm">分钟级</span> 启动时间</p>
+                            <p class="text-sm text-gray-300">需要启动完整操作系统</p>
+                        </div>
+                        <div class="docker-side flex-1">
+                            <h4 class="font-semibold mb-1">Docker 容器</h4>
+                            <p><span class="highlight-docker">秒级</span> 启动时间</p>
+                            <p class="text-sm text-gray-300">无需启动 OS，直接运行应用</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Resource Consumption -->
+                <div class="comparison-row">
+                    <div class="feature-label">
+                        <i class="fas fa-microchip text-gray-300 mb-1"></i>
+                        <span>资源消耗</span>
+                    </div>
+                    <div class="flex flex-1">
+                        <div class="vm-side flex-1 mr-2">
+                            <h4 class="font-semibold mb-1">传统虚拟机</h4>
+                            <p><span class="highlight-vm">高消耗</span> (完整 OS)</p>
+                            <p class="text-sm text-gray-300">每个 VM 包含独立的操作系统</p>
+                        </div>
+                        <div class="docker-side flex-1">
+                            <h4 class="font-semibold mb-1">Docker 容器</h4>
+                            <p><span class="highlight-docker">低消耗</span> (共享内核)</p>
+                            <p class="text-sm text-gray-300">容器共享主机的 OS 内核</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Isolation Level -->
+                <div class="comparison-row">
+                    <div class="feature-label">
+                        <i class="fas fa-shield-alt text-gray-300 mb-1"></i>
+                        <span>隔离级别</span>
+                    </div>
+                    <div class="flex flex-1">
+                        <div class="vm-side flex-1 mr-2">
+                            <h4 class="font-semibold mb-1">传统虚拟机</h4>
+                            <p><span class="highlight-vm">硬件级隔离</span></p>
+                            <p class="text-sm text-gray-300">完全隔离的虚拟硬件环境</p>
+                        </div>
+                        <div class="docker-side flex-1">
+                            <h4 class="font-semibold mb-1">Docker 容器</h4>
+                            <p><span class="highlight-docker">进程级隔离</span></p>
+                            <p class="text-sm text-gray-300">通过命名空间和 cgroups 实现</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Portability -->
+                <div class="comparison-row">
+                    <div class="feature-label">
+                        <i class="fas fa-exchange-alt text-gray-300 mb-1"></i>
+                        <span>可移植性</span>
+                    </div>
+                    <div class="flex flex-1">
+                        <div class="vm-side flex-1 mr-2">
+                            <h4 class="font-semibold mb-1">传统虚拟机</h4>
+                            <p><span class="highlight-vm">差</span></p>
+                            <p class="text-sm text-gray-300">依赖于特定的虚拟化平台</p>
+                        </div>
+                        <div class="docker-side flex-1">
+                            <h4 class="font-semibold mb-1">Docker 容器</h4>
+                            <p><span class="highlight-docker">优秀</span></p>
+                            <p class="text-sm text-gray-300">&#34;一次构建，到处运行&#34;</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Management Complexity -->
+                <div class="comparison-row">
+                    <div class="feature-label">
+                        <i class="fas fa-cogs text-gray-300 mb-1"></i>
+                        <span>管理复杂度</span>
+                    </div>
+                    <div class="flex flex-1">
+                        <div class="vm-side flex-1 mr-2">
+                            <h4 class="font-semibold mb-1">传统虚拟机</h4>
+                            <p><span class="highlight-vm">高</span></p>
+                            <p class="text-sm text-gray-300">需要维护完整的操作系统</p>
+                        </div>
+                        <div class="docker-side flex-1">
+                            <h4 class="font-semibold mb-1">Docker 容器</h4>
+                            <p><span class="highlight-docker">低</span></p>
+                            <p class="text-sm text-gray-300">简化的应用级管理</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            4 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

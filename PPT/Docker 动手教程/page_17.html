@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>常见问题解答</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 744px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .qa-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #0db7ed;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .qa-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .question {
+            color: #f60;
+            font-weight: 600;
+        }
+
+        .answer {
+            color: white;
+            font-weight: 400;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(13, 183, 237, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(13, 183, 237, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fas fa-question-circle text-blue-400 mr-4"></i>
+                常见问题解答
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-1 gap-4">
+                <!-- Installation Issues -->
+                <div>
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-download text-blue-400"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold">安装相关问题</h2>
+                    </div>
+                    <div class="qa-card p-3">
+                        <p class="question flex items-start">
+                            <i class="fas fa-question-circle mr-2 mt-1"></i>
+                            Docker Desktop 启动失败怎么办？
+                        </p>
+                        <p class="answer flex items-start mt-1">
+                            <i class="fas fa-arrow-right text-blue-400 mr-2 mt-1"></i>
+                            检查系统要求，确保启用虚拟化功能，重启 Docker 服务。
+                        </p>
+                    </div>
+                    <div class="qa-card p-3">
+                        <p class="question flex items-start">
+                            <i class="fas fa-question-circle mr-2 mt-1"></i>
+                            镜像拉取速度慢怎么办？
+                        </p>
+                        <p class="answer flex items-start mt-1">
+                            <i class="fas fa-arrow-right text-blue-400 mr-2 mt-1"></i>
+                            配置国内镜像加速器，如阿里云、腾讯云等。
+                        </p>
+                    </div>
+                </div>
+                <!-- Usage Issues -->
+                <div>
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-cogs text-blue-400"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold">使用相关问题</h2>
+                    </div>
+                    <div class="qa-card p-3">
+                        <p class="question flex items-start">
+                            <i class="fas fa-question-circle mr-2 mt-1"></i>
+                            容器无法访问怎么办？
+                        </p>
+                        <p class="answer flex items-start mt-1">
+                            <i class="fas fa-arrow-right text-blue-400 mr-2 mt-1"></i>
+                            检查端口映射配置，确保防火墙设置正确。
+                        </p>
+                    </div>
+                    <div class="qa-card p-3">
+                        <p class="question flex items-start">
+                            <i class="fas fa-question-circle mr-2 mt-1"></i>
+                            磁盘空间不足怎么办？
+                        </p>
+                        <p class="answer flex items-start mt-1">
+                            <i class="fas fa-arrow-right text-blue-400 mr-2 mt-1"></i>
+                            定期清理未使用的镜像、容器和数据卷。
+                        </p>
+                    </div>
+                    <div class="qa-card p-3">
+                        <p class="question flex items-start">
+                            <i class="fas fa-question-circle mr-2 mt-1"></i>
+                            容器内时间不正确怎么办？
+                        </p>
+                        <p class="answer flex items-start mt-1">
+                            <i class="fas fa-arrow-right text-blue-400 mr-2 mt-1"></i>
+                            挂载主机时区文件：<code class="bg-gray-800 px-1 rounded">-v /etc/localtime:/etc/localtime:ro</code>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+    
+</body>
+
+</html>

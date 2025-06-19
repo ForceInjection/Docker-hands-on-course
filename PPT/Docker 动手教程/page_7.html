@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>镜像拉取与运行</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem 1rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1.5rem 3rem;
+            height: calc(100% - 130px);
+
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #0db7ed;
+            overflow-x: auto;
+        }
+
+        .code-line {
+            margin-bottom: 0.5rem;
+        }
+
+        .code-comment {
+            color: #8b9cb3;
+        }
+
+        .box {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(13, 183, 237, 0.3);
+            height: 100%;
+        }
+
+        .naming-example {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+
+        .command-section {
+            margin-top: 1rem;
+        }
+
+        .command-section h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .command-group {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                镜像拉取与运行
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-6 h-full">
+                <!-- Left Column: Docker Hub &amp; Image Naming -->
+                <div class="flex flex-col">
+                    <!-- Docker Hub Basics -->
+                    <div class="box mb-4">
+                        <h2 class="text-2xl font-semibold mb-3 flex items-center">
+                            <i class="fas fa-cloud text-blue-400 mr-2"></i>
+                            Docker Hub 基础
+                        </h2>
+                        <p class="mb-3">Docker Hub 是官方的镜像<span class="highlight">存储和分发中心</span>，提供公共和私有镜像仓库。</p>
+                        <div class="flex items-center mt-3">
+                            <i class="fas fa-search text-blue-400 text-xl mr-3"></i>
+                            <span>搜索公共镜像</span>
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <i class="fas fa-download text-blue-400 text-xl mr-3"></i>
+                            <span>拉取常用镜像</span>
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <i class="fas fa-upload text-blue-400 text-xl mr-3"></i>
+                            <span>发布自定义镜像</span>
+                        </div>
+                    </div>
+                    <!-- Image Naming Conventions -->
+                    <div class="box">
+                        <h2 class="text-2xl font-semibold mb-3 flex items-center">
+                            <i class="fas fa-tags text-blue-400 mr-2"></i>
+                            镜像命名规范
+                        </h2>
+                        <div class="mb-4">
+                            <div class="code-block mb-3">
+                                <span class="highlight">[registry]</span>/<span
+                                    class="highlight">[namespace]</span>/<span
+                                    class="highlight">[repository]</span>:<span class="highlight">[tag]</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl mb-2">示例：</h3>
+                        <div class="naming-example">
+                            <i class="fas fa-cube text-blue-400 mr-3"></i>
+                            <div>
+                                <code>nginx:latest</code>
+                            </div>
+                        </div>
+                        <div class="naming-example">
+                            <i class="fas fa-cube text-blue-400 mr-3"></i>
+                            <div>
+                                <code>docker.io/library/ubuntu:20.04</code>
+                            </div>
+                        </div>
+                        <div class="naming-example">
+                            <i class="fas fa-cube text-blue-400 mr-3"></i>
+                            <div>
+                                <code>registry.cn-hangzhou.aliyuncs.com/acs/nginx</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: Pull Commands & Examples -->
+                <div class="flex flex-col">
+                    <!-- Docker Pull Commands -->
+                    <div class="box mb-4">
+                        <h2 class="text-2xl font-semibold mb-3 flex items-center">
+                            <i class="fas fa-download text-blue-400 mr-2"></i>
+                            镜像拉取命令
+                        </h2>
+                        <div class="command-section">
+                            <h3 class="text-lg font-semibold mb-2">从 Docker Hub 拉取：</h3>
+                            <div class="code-block mb-3">
+                                <div class="code-line">docker pull nginx</div>
+                                <div class="code-line">docker pull nginx:1.21</div>
+                                <div class="code-line">docker pull ubuntu:20.04</div>
+                            </div>
+                        </div>
+                        <div class="command-section">
+                            <h3 class="text-lg font-semibold mb-2">从阿里云镜像仓库拉取：</h3>
+                            <div class="code-block mb-3">
+                                <div class="code-line">docker pull registry.cn-hangzhou.aliyuncs.com/acs/nginx</div>
+                                <div class="code-line">docker pull registry.cn-beijing.aliyuncs.com/library/redis:6.2</div>
+                            </div>
+                        </div>
+                        <div class="command-section">
+                            <h3 class="text-lg font-semibold mb-2">从私有仓库拉取：</h3>
+                            <div class="code-block">
+                                <div class="code-line">docker pull localhost:5000/my-app:v1.0</div>
+                                <div class="code-line">docker pull myregistry.com:8080/project/api</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Running Containers -->
+                    <div class="box">
+                        <h2 class="text-2xl font-semibold mb-3 flex items-center">
+                            <i class="fas fa-play text-blue-400 mr-2"></i>
+                            运行容器示例
+                        </h2>
+                        <div class="command-group">
+                            <h3 class="text-lg font-semibold mb-2">基础运行：</h3>
+                            <div class="code-block mb-3">
+                                <div class="code-line">docker run hello-world</div>
+                                <div class="code-line">docker run -d nginx</div>
+                                <div class="code-line">docker run -it ubuntu:20.04 bash</div>
+                            </div>
+                        </div>
+                        <div class="command-group">
+                            <h3 class="text-lg font-semibold mb-2">端口映射运行：</h3>
+                            <div class="code-block mb-3">
+                                <div class="code-line">docker run -d -p 8080:80 nginx</div>
+                                <div class="code-line">docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:8.0</div>
+                            </div>
+                        </div>
+                        <div class="command-group">
+                            <h3 class="text-lg font-semibold mb-2">数据卷挂载：</h3>
+                            <div class="code-block">
+                                <div class="code-line">docker run -d -v /host/data:/container/data nginx</div>
+                                <div class="code-line">docker run -d -v myvolume:/var/lib/mysql mysql:8.0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

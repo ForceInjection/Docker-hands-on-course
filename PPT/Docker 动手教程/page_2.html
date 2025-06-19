@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>学习目标与路径</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .objective-item {
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(13, 183, 237, 0.1);
+            border-left: 4px solid #0db7ed;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .path-node {
+            width: 150px;
+            height: 70px;
+            background: rgba(13, 183, 237, 0.2);
+            border: 2px solid #0db7ed;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .path-node:hover {
+            background: rgba(13, 183, 237, 0.3);
+            transform: scale(1.05);
+        }
+
+        .path-arrow {
+            color: #0db7ed;
+            font-size: 1.5rem;
+            margin: 0 1rem;
+        }
+
+        .time-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .highlight {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                学习目标与路径
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Left Column: Learning Objectives -->
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-bullseye text-blue-400 mr-2"></i>
+                        六大学习目标
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="objective-item flex items-start">
+                            <i class="fas fa-brain text-blue-400 mt-1 mr-3"></i>
+                            <span>深入理解 Docker 核心概念和架构</span>
+                        </div>
+                        <div class="objective-item flex items-start">
+                            <i class="fas fa-tools text-blue-400 mt-1 mr-3"></i>
+                            <span>熟练掌握 Docker 环境安装和配置</span>
+                        </div>
+                        <div class="objective-item flex items-start">
+                            <i class="fas fa-download text-blue-400 mt-1 mr-3"></i>
+                            <span>学会镜像拉取、运行和管理</span>
+                        </div>
+                        <div class="objective-item flex items-start">
+                            <i class="fas fa-hammer text-blue-400 mt-1 mr-3"></i>
+                            <span>掌握自定义镜像构建和发布</span>
+                        </div>
+                        <div class="objective-item flex items-start">
+                            <i class="fas fa-terminal text-blue-400 mt-1 mr-3"></i>
+                            <span>精通 Docker 常用命令和最佳实践</span>
+                        </div>
+                        <div class="objective-item flex items-start">
+                            <i class="fas fa-rocket text-blue-400 mt-1 mr-3"></i>
+                            <span>具备容器化应用的开发和部署能力</span>
+                        </div>
+                    </div>
+                    <!-- Time Estimates -->
+                    <div class="time-card mt-6">
+                        <h3 class="text-xl font-semibold mb-2 flex items-center">
+                            <i class="fas fa-clock text-blue-400 mr-2"></i>
+                            学习时间预估
+                        </h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="flex items-center">
+                                <i class="fas fa-hourglass-half text-blue-400 mr-2"></i>
+                                <span>总学习时间: <span class="highlight">6-8 小时</span></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-book text-blue-400 mr-2"></i>
+                                <span>理论学习: <span class="highlight">2-3 小时</span></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-laptop-code text-blue-400 mr-2"></i>
+                                <span>实践操作: <span class="highlight">4-5 小时</span></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar-alt text-blue-400 mr-2"></i>
+                                <span>建议周期: <span class="highlight">1-2 周</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: Learning Path -->
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-route text-blue-400 mr-2"></i>
+                        学习路径
+                    </h2>
+                    <div class="learning-path flex flex-col items-center mt-6">
+                        <div class="path-step flex items-center">
+                            <div class="path-node">
+                                <div>
+                                    <i class="fas fa-book-open text-blue-400 mb-1"></i>
+                                    <div>第1章:<br />Docker 基础概念</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="path-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="path-step flex items-center">
+                            <div class="path-node">
+                                <div>
+                                    <i class="fas fa-cogs text-blue-400 mb-1"></i>
+                                    <div>第2章:<br />环境安装配置</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="path-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="path-step flex items-center">
+                            <div class="path-node">
+                                <div>
+                                    <i class="fas fa-cloud-download-alt text-blue-400 mb-1"></i>
+                                    <div>第3章:<br />镜像拉取运行</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="path-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="path-step flex items-center">
+                            <div class="path-node">
+                                <div>
+                                    <i class="fas fa-hammer text-blue-400 mb-1"></i>
+                                    <div>第4章:<br />自定义镜像构建</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="path-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="path-step flex items-center">
+                            <div class="path-node">
+                                <div>
+                                    <i class="fas fa-terminal text-blue-400 mb-1"></i>
+                                    <div>第5章:<br />核心命令掌握</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            2 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

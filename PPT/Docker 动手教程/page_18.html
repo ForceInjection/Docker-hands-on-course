@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>总结与下一步</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 822px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .summary-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #0db7ed;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .next-step {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #0db7ed;
+            transition: all 0.3s ease;
+        }
+
+        .next-step:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .resource-item {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .resource-item:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .highlight {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+
+        .conclusion-box {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(13, 183, 237, 0.3);
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                总结与下一步
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Left Column: Summary -->
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-check-circle text-blue-400 mr-2"></i>
+                        已掌握核心技能
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="summary-card flex items-start">
+                            <i class="fas fa-brain text-blue-400 mt-1 mr-3 text-xl"></i>
+                            <span>理解 <span class="highlight">Docker 核心概念</span> 和容器技术的优势</span>
+                        </div>
+                        <div class="summary-card flex items-start">
+                            <i class="fas fa-tools text-blue-400 mt-1 mr-3 text-xl"></i>
+                            <span><span class="highlight">环境搭建能力</span>：在不同平台安装配置 Docker</span>
+                        </div>
+                        <div class="summary-card flex items-start">
+                            <i class="fas fa-layer-group text-blue-400 mt-1 mr-3 text-xl"></i>
+                            <span><span class="highlight">镜像管理技能</span>：熟练进行镜像拉取、运行和管理</span>
+                        </div>
+                        <div class="summary-card flex items-start">
+                            <i class="fas fa-hammer text-blue-400 mt-1 mr-3 text-xl"></i>
+                            <span><span class="highlight">自定义构建能力</span>：能够编写 Dockerfile 构建自定义镜像</span>
+                        </div>
+                        <div class="summary-card flex items-start">
+                            <i class="fas fa-terminal text-blue-400 mt-1 mr-3 text-xl"></i>
+                            <span><span class="highlight">命令行操作技能</span>：掌握 Docker 常用命令和最佳实践</span>
+                        </div>
+                    </div>
+                    <div class="conclusion-box mt-6">
+                        <h3 class="text-xl font-semibold mb-2">学习成果</h3>
+                        <p class="text-lg">
+                            您已成功掌握 Docker 容器技术的基础与核心，具备了在实际项目中应用 Docker 的能力。
+                            <br />接下来，建议您将所学知识应用到实际项目中，不断实践与探索。
+                        </p>
+                    </div>
+                </div>
+                <!-- Right Column: Next Steps -->
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-arrow-circle-up text-blue-400 mr-2"></i>
+                        进阶学习建议
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="next-step flex items-start">
+                            <div class="bg-blue-500 bg-opacity-30 p-3 rounded-full mr-4">
+                                <i class="fas fa-dharmachakra text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">深入学习 Docker Compose</h3>
+                                <p>掌握多容器应用编排，简化复杂应用的部署和管理</p>
+                            </div>
+                        </div>
+                        <div class="next-step flex items-start">
+                            <div class="bg-blue-500 bg-opacity-30 p-3 rounded-full mr-4">
+                                <i class="fas fa-network-wired text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">学习 Kubernetes</h3>
+                                <p>探索容器编排和集群管理，为生产环境做准备</p>
+                            </div>
+                        </div>
+                        <div class="next-step flex items-start">
+                            <div class="bg-blue-500 bg-opacity-30 p-3 rounded-full mr-4">
+                                <i class="fas fa-code-branch text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">实践 DevOps</h3>
+                                <p>将 Docker 集成到 CI/CD 流程，实现自动化部署</p>
+                            </div>
+                        </div>
+                        <div class="next-step flex items-start">
+                            <div class="bg-blue-500 bg-opacity-30 p-3 rounded-full mr-4">
+                                <i class="fas fa-cloud text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">探索云原生</h3>
+                                <p>学习微服务、服务网格等技术，构建现代化应用架构</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Get Help Resources -->
+                    <div class="mt-6">
+                        <h3 class="text-xl font-semibold mb-3 flex items-center">
+                            <i class="fas fa-hands-helping text-blue-400 mr-2"></i>
+                            获取帮助
+                        </h3>
+                        <div class="grid grid-cols-1 gap-2">
+                            <div class="resource-item">
+                                <i class="fas fa-globe text-blue-400 mr-3"></i>
+                                <span>Docker 官方社区: <span class="text-blue-300">forums.docker.com</span></span>
+                            </div>
+                            <div class="resource-item">
+                                <i class="fas fa-book text-blue-400 mr-3"></i>
+                                <span>Stack Overflow: <span
+                                        class="text-blue-300">stackoverflow.com/questions/tagged/docker</span></span>
+                            </div>
+                            <div class="resource-item">
+                                <i class="fas fa-comments text-blue-400 mr-3"></i>
+                                <span>Docker 中文社区: <span class="text-blue-300">www.docker.org.cn</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            18 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

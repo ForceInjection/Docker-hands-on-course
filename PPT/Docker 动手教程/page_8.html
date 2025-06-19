@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>容器运行管理</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 763px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem 1rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+            height: calc(100% - 120px);
+
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-family: 'Consolas', monospace;
+            border-left: 3px solid #0db7ed;
+            margin: 0.5rem 0;
+
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+        }
+
+        .section-card {
+            background: rgba(13, 183, 237, 0.08);
+            border-radius: 8px;
+            padding: 1rem;
+            height: 100%;
+            border: 1px solid rgba(13, 183, 237, 0.2);
+        }
+
+        .command-keyword {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+
+        .command-param {
+            color: #f8a100;
+        }
+
+        .lifecycle-node {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(13, 183, 237, 0.15);
+            border: 2px solid #0db7ed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .lifecycle-arrow {
+            color: #0db7ed;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                容器运行管理
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-3 gap-6 h-full">
+                <!-- Column 1: Basic Running Commands -->
+                <div class="section-card">
+                    <h2 class="text-xl font-semibold mb-3 flex items-center">
+                        <i class="fas fa-play-circle text-blue-400 mr-2"></i>
+                        基础运行命令
+                    </h2>
+                    <div class="space-y-1">
+                        <p class="text-sm mb-1 flex items-center">
+                            <i class="fas fa-terminal text-gray-400 mr-2"></i>
+                            基本运行
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> run nginx
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-terminal text-gray-400 mr-2"></i>
+                            后台运行
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> run <span class="command-param">-d</span> nginx
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-terminal text-gray-400 mr-2"></i>
+                            端口映射
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> run <span class="command-param">-d -p
+                                8080:80</span> nginx
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-terminal text-gray-400 mr-2"></i>
+                            指定名称
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> run <span class="command-param">-d -p 8080:80
+                                --name web</span> nginx
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-terminal text-gray-400 mr-2"></i>
+                            交互式运行
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> run <span class="command-param">-it</span>
+                            ubuntu:20.04 /bin/bash
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-terminal text-gray-400 mr-2"></i>
+                            退出后自动删除
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> run <span class="command-param">-it --rm</span>
+                            alpine:latest sh
+                        </div>
+                    </div>
+                </div>
+                <!-- Column 2: Container Lifecycle Management -->
+                <div class="section-card">
+                    <h2 class="text-xl font-semibold mb-3 flex items-center">
+                        <i class="fas fa-sync-alt text-blue-400 mr-2"></i>
+                        容器生命周期管理
+                    </h2>
+                    <!-- Lifecycle Visualization -->
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="lifecycle-node">
+                            <i class="fas fa-plus-circle text-blue-400 mb-1 text-xl"></i>
+                            <div class="text-sm">创建</div>
+                            <div class="text-xs text-gray-300">docker run</div>
+                        </div>
+                        <div class="lifecycle-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="lifecycle-node">
+                            <i class="fas fa-play text-green-400 mb-1 text-xl"></i>
+                            <div class="text-sm">运行</div>
+                            <div class="text-xs text-gray-300">docker start</div>
+                        </div>
+                        <div class="lifecycle-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="lifecycle-node">
+                            <i class="fas fa-stop-circle text-red-400 mb-1 text-xl"></i>
+                            <div class="text-sm">停止</div>
+                            <div class="text-xs text-gray-300">docker stop</div>
+                        </div>
+                    </div>
+                    <div class="space-y-1 mt-4">
+                        <p class="text-sm mb-1 flex items-center">
+                            <i class="fas fa-search text-gray-400 mr-2"></i>
+                            查看容器
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> ps <span class="text-gray-400">#
+                                运行中的容器</span><br />
+                            <span class="command-keyword">docker</span> ps <span class="command-param">-a</span> <span
+                                class="text-gray-400"># 所有容器</span>
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-sliders-h text-gray-400 mr-2"></i>
+                            容器控制
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> stop container_name <span
+                                class="text-gray-400"># 停止容器</span><br />
+                            <span class="command-keyword">docker</span> start container_name <span
+                                class="text-gray-400"># 启动容器</span><br />
+                            <span class="command-keyword">docker</span> restart container_name <span
+                                class="text-gray-400"># 重启容器</span>
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-trash-alt text-gray-400 mr-2"></i>
+                            容器清理
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> rm container_name <span class="text-gray-400">#
+                                删除容器</span><br />
+                            <span class="command-keyword">docker</span> rm <span class="command-param">-f</span>
+                            container_name <span class="text-gray-400"># 强制删除</span><br />
+                            <span class="command-keyword">docker</span> container prune <span class="text-gray-400">#
+                                清理停止容器</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column 3: Container Interactive Debugging -->
+                <div class="section-card">
+                    <h2 class="text-xl font-semibold mb-3 flex items-center">
+                        <i class="fas fa-bug text-blue-400 mr-2"></i>
+                        容器交互调试
+                    </h2>
+                    <div class="space-y-1">
+                        <p class="text-sm mb-1 flex items-center">
+                            <i class="fas fa-sign-in-alt text-gray-400 mr-2"></i>
+                            进入容器
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> exec <span class="command-param">-it</span>
+                            container_name /bin/bash<br />
+                            <span class="command-keyword">docker</span> exec <span class="command-param">-it</span>
+                            container_name /bin/sh
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-file-alt text-gray-400 mr-2"></i>
+                            查看容器日志
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> logs container_name<br />
+                            <span class="command-keyword">docker</span> logs <span class="command-param">-f</span>
+                            container_name <span class="text-gray-400"># 实时查看</span><br />
+                            <span class="command-keyword">docker</span> logs <span class="command-param">--tail
+                                50</span> container_name <span class="text-gray-400"># 查看最后50行</span>
+                        </div>
+                        <p class="text-sm mb-1 flex items-center mt-2">
+                            <i class="fas fa-exchange-alt text-gray-400 mr-2"></i>
+                            文件传输
+                        </p>
+                        <div class="code-block">
+                            <span class="command-keyword">docker</span> cp file.txt container_name:/path/<br />
+                            <span class="command-keyword">docker</span> cp container_name:/path/file.txt ./
+                        </div>
+                        <div
+                            class="bg-blue-900 bg-opacity-30 p-3 rounded-lg mt-4 border border-blue-400 border-opacity-30">
+                            <h3 class="text-sm font-semibold flex items-center mb-2">
+                                <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+                                实用技巧
+                            </h3>
+                            <ul class="text-xs space-y-1 pl-6 list-disc">
+                                <li>使用 <span class="text-blue-300">--rm</span> 参数可在容器退出后自动删除</li>
+                                <li>使用 <span class="text-blue-300">-v</span> 挂载卷保存容器数据</li>
+                                <li>通过 <span class="text-blue-300">docker stats</span> 监控容器资源使用</li>
+                                <li>设置 <span class="text-blue-300">--restart=always</span> 实现容器自动重启</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            8 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

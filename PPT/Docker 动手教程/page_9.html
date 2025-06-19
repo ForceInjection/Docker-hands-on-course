@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dockerfile 基础</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 736px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 0.5rem 3rem;
+            height: calc(100% - 100px);
+            overflow-y: auto;
+        }
+
+        .instruction-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-left: 4px solid #0db7ed;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .instruction-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .code-example {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .instruction-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(13, 183, 237, 0.2);
+            color: #0db7ed;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                Dockerfile 基础
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-4">
+                <!-- FROM Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">FROM</div>
+                            <div class="text-sm mb-1">指定基础镜像，所有构建的第一条指令</div>
+                            <div class="code-example text-xs">FROM nginx:alpine</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- LABEL Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">LABEL</div>
+                            <div class="text-sm mb-1">添加镜像元数据，如维护者信息</div>
+                            <div class="code-example text-xs">LABEL maintainer=&#34;your-email@example.com&#34;</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- WORKDIR Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">WORKDIR</div>
+                            <div class="text-sm mb-1">设置工作目录，影响后续指令</div>
+                            <div class="code-example text-xs">WORKDIR /usr/share/nginx/html</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- COPY Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-copy"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">COPY</div>
+                            <div class="text-sm mb-1">从构建上下文复制文件到镜像</div>
+                            <div class="code-example text-xs">COPY index.html .</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ADD Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-file-import"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">ADD</div>
+                            <div class="text-sm mb-1">复制文件，支持URL和自动解压</div>
+                            <div class="code-example text-xs">ADD app.tar.gz /app/</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- RUN Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">RUN</div>
+                            <div class="text-sm mb-1">执行命令并创建新的镜像层</div>
+                            <div class="code-example text-xs">RUN apk add --no-cache curl</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ENV Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">ENV</div>
+                            <div class="text-sm mb-1">设置环境变量</div>
+                            <div class="code-example text-xs">ENV NODE_ENV=production</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- EXPOSE Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">EXPOSE</div>
+                            <div class="text-sm mb-1">声明容器监听的端口</div>
+                            <div class="code-example text-xs">EXPOSE 80 443</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- VOLUME Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">VOLUME</div>
+                            <div class="text-sm mb-1">创建挂载点，用于数据持久化</div>
+                            <div class="code-example text-xs">VOLUME [&#34;/data&#34;]</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- CMD Instruction -->
+                <div class="instruction-card p-3">
+                    <div class="flex items-start">
+                        <div class="instruction-icon mr-3">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl font-semibold text-blue-400">CMD</div>
+                            <div class="text-sm mb-1">容器启动时执行的默认命令</div>
+                            <div class="code-example text-xs">CMD [&#34;nginx&#34;, &#34;-g&#34;, &#34;daemon off;&#34;]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Best Practice Note -->
+            <div class="mt-4 p-3 bg-blue-900 bg-opacity-30 rounded-lg border border-blue-400 border-opacity-30">
+                <div class="flex items-start">
+                    <i class="fas fa-lightbulb text-yellow-400 mt-1 mr-3"></i>
+                    <div>
+                        <span class="font-semibold">最佳实践：</span>
+                        <span>使用多阶段构建减小镜像大小，合理安排指令顺序以优化缓存，每个RUN执行多个相关命令减少层数。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            9 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

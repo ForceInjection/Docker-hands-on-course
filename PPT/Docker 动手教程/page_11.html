@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>镜像构建与发布</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 910px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .process-step {
+            background: rgba(13, 183, 237, 0.1);
+            border-left: 4px solid #0db7ed;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .step-icon {
+            background: #0db7ed;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow: auto;
+        }
+
+        .code-comment {
+            color: #6c7a89;
+        }
+
+        .code-keyword {
+            color: #569cd6;
+        }
+
+        .code-string {
+            color: #ce9178;
+        }
+
+        .code-function {
+            color: #dcdcaa;
+        }
+
+        .code-property {
+            color: #4ec9b0;
+        }
+
+        .highlight {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+
+        .multi-stage {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .stage-label {
+            background: rgba(13, 183, 237, 0.2);
+            border: 1px solid #0db7ed;
+            border-radius: 4px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                镜像构建与发布
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Left Column: Image Building and Publishing Process -->
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-upload text-blue-400 mr-2"></i>
+                        镜像构建与发布流程
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="process-step flex">
+                            <div class="step-icon">
+                                <i class="fas fa-tools text-gray-900"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">1. 构建镜像</h3>
+                                <p class="code-block mt-2">
+                                    <span class="code-keyword">docker</span> <span class="code-function">build</span>
+                                    <span class="code-property">-t</span> <span
+                                        class="code-string">my-web-app:v1.0</span> <span class="code-string">.</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="process-step flex">
+                            <div class="step-icon">
+                                <i class="fas fa-vial text-gray-900"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">2. 测试镜像</h3>
+                                <p class="code-block mt-2">
+                                    <span class="code-keyword">docker</span> <span class="code-function">run</span>
+                                    <span class="code-property">-d</span> <span class="code-property">-p</span> <span
+                                        class="code-string">8080:80</span> <span class="code-property">--name</span>
+                                    <span class="code-string">my-app</span> <span
+                                        class="code-string">my-web-app:v1.0</span><br />
+                                    <span class="code-comment"># 测试访问</span><br />
+                                    <span class="code-keyword">curl</span> <span
+                                        class="code-string">http://localhost:8080</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="process-step flex">
+                            <div class="step-icon">
+                                <i class="fas fa-tag text-gray-900"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">3. 标记镜像</h3>
+                                <p class="code-block mt-2">
+                                    <span class="code-keyword">docker</span> <span class="code-function">tag</span>
+                                    <span class="code-string">my-web-app:v1.0</span> <span
+                                        class="code-string">your-username/my-web-app:v1.0</span><br />
+                                    <span class="code-keyword">docker</span> <span class="code-function">tag</span>
+                                    <span class="code-string">my-web-app:v1.0</span> <span
+                                        class="code-string">your-username/my-web-app:latest</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="process-step flex">
+                            <div class="step-icon">
+                                <i class="fas fa-cloud-upload-alt text-gray-900"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">4. 推送镜像</h3>
+                                <p class="code-block mt-2">
+                                    <span class="code-keyword">docker</span> <span
+                                        class="code-function">login</span><br />
+                                    <span class="code-keyword">docker</span> <span class="code-function">push</span>
+                                    <span class="code-string">your-username/my-web-app:v1.0</span><br />
+                                    <span class="code-keyword">docker</span> <span class="code-function">push</span>
+                                    <span class="code-string">your-username/my-web-app:latest</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: Multi-stage Build Optimization -->
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-layer-group text-blue-400 mr-2"></i>
+                        多阶段构建优化
+                    </h2>
+                    <div class="multi-stage">
+                        <div class="stage-label">
+                            <i class="fas fa-code text-blue-400 mr-1"></i>
+                            Dockerfile 多阶段构建示例
+                        </div>
+                        <p class="code-block mt-2">
+                            <span class="code-comment"># 构建阶段</span><br />
+                            <span class="code-keyword">FROM</span> <span class="code-string">node:16-alpine</span> <span
+                                class="code-keyword">AS</span> <span class="code-string">builder</span><br />
+                            <span class="code-keyword">WORKDIR</span> <span class="code-string">/app</span><br />
+                            <span class="code-keyword">COPY</span> <span class="code-string">package*.json</span> <span
+                                class="code-string">./</span><br />
+                            <span class="code-keyword">RUN</span> <span class="code-function">npm</span> <span
+                                class="code-function">ci</span> <span
+                                class="code-property">--only=production</span><br /><br />
+                            <span class="code-comment"># 运行阶段</span><br />
+                            <span class="code-keyword">FROM</span> <span class="code-string">nginx:alpine</span><br />
+                            <span class="code-keyword">COPY</span> <span class="code-property">--from=builder</span>
+                            <span class="code-string">/app/dist</span> <span
+                                class="code-string">/usr/share/nginx/html</span><br />
+                            <span class="code-keyword">EXPOSE</span> <span class="code-string">80</span><br />
+                            <span class="code-keyword">CMD</span> <span class="code-function">[&#34;nginx&#34;,
+                                &#34;-g&#34;, &#34;daemon off;&#34;]</span>
+                        </p>
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-2"></i>
+                                优化技巧
+                            </h3>
+                            <ul class="list-disc pl-6 mt-2 space-y-2">
+                                <li>使用 <span class="highlight">alpine</span> 基础镜像，减小体积</li>
+                                <li>多阶段构建，分离构建环境和运行环境</li>
+                                <li>清理缓存文件，减少最终镜像大小</li>
+                                <li>合理使用标签，便于版本管理和更新</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-700">
+                        <h3 class="text-lg font-semibold flex items-center">
+                            <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+                            发布注意事项
+                        </h3>
+                        <ul class="list-disc pl-6 mt-2 space-y-1">
+                            <li>确保镜像已通过本地测试</li>
+                            <li>使用语义化版本号（如 v1.0.0）</li>
+                            <li>为镜像添加适当的标签（latest、版本号）</li>
+                            <li>验证发布成功：访问 Docker Hub 仓库页面</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            11 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

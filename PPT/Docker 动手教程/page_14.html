@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>网络与存储管理</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 884px;
+
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+        }
+
+        .command-card {
+            background: rgba(13, 183, 237, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #0db7ed;
+            transition: all 0.3s ease;
+        }
+
+        .command-card:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: translateX(5px);
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #f8f8f2;
+            overflow-x: auto;
+        }
+
+        .command {
+            color: #f60;
+        }
+
+        .section-title {
+            color: #0db7ed;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            background: rgba(13, 183, 237, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+        }
+
+        .highlight {
+            color: #0db7ed;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                网络与存储管理
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Left Column: Network Management -->
+                <div>
+                    <div class="section-title text-xl">
+                        <div class="section-icon">
+                            <i class="fas fa-network-wired text-blue-400"></i>
+                        </div>
+                        网络管理
+                    </div>
+                    <div class="space-y-4">
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-list text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">列出网络</h3>
+                                    <div class="code-block">
+                                        docker network ls
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-plus-circle text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">创建网络</h3>
+                                    <div class="code-block">
+                                        docker network create mynet
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-search text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">查看网络详情</h3>
+                                    <div class="code-block">
+                                        docker network inspect bridge
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-link text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">连接网络</h3>
+                                    <div class="code-block">
+                                        docker network connect mynet container_name
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-unlink text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">断开网络</h3>
+                                    <div class="code-block">
+                                        docker network disconnect mynet container_name
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: Volume Management -->
+                <div>
+                    <div class="section-title text-xl">
+                        <div class="section-icon">
+                            <i class="fas fa-hdd text-blue-400"></i>
+                        </div>
+                        数据卷管理
+                    </div>
+                    <div class="space-y-4">
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-list text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">列出数据卷</h3>
+                                    <div class="code-block">
+                                        docker volume ls
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-plus-circle text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">创建数据卷</h3>
+                                    <div class="code-block">
+                                        docker volume create myvolume
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-search text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">查看数据卷详情</h3>
+                                    <div class="code-block">
+                                        docker volume inspect myvolume
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-trash-alt text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">删除数据卷</h3>
+                                    <div class="code-block">
+                                        docker volume rm myvolume
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-card">
+                            <div class="flex items-start">
+                                <div class="mr-3 mt-1">
+                                    <i class="fas fa-broom text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">清理未使用数据卷</h3>
+                                    <div class="code-block">
+                                        docker volume prune
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tips Section -->
+            <div class="mt-6 bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-700">
+                <h3 class="text-lg font-semibold flex items-center">
+                    <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+                    实用技巧
+                </h3>
+                <div class="grid grid-cols-2 gap-4 mt-2">
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                        <span>网络模式 <span class="highlight">bridge</span> 是 Docker 的默认网络模式</span>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                        <span>数据卷可以持久化存储容器数据</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            14 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+    
+
+</body>
+
+</html>

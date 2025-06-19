@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Docker 架构组件</title>
+    <link href="https://picture-search.tiangong.cn/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.tiangong.cn/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .slide {
+            width: 1280px;
+            min-height: 700px;
+            height: auto;
+            position: relative;
+            background: linear-gradient(135deg, #1a2a32 0%, #2c3e50 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slide-header {
+            padding: 2rem 3rem;
+            border-bottom: 2px solid rgba(13, 183, 237, 0.3);
+        }
+
+        .content-area {
+            padding: 1rem 3rem;
+            min-height: calc(100% - 100px);
+            position: relative;
+            overflow: visible;
+        }
+
+        .architecture-diagram {
+            display: flex;
+            height: 580px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .diagram-left {
+            position: relative;
+            flex: 1;
+            min-width: 700px;
+        }
+
+        .diagram-right {
+            width: 300px;
+            padding-left: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .component-description {
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(13, 183, 237, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .component-description:hover {
+            background: rgba(31, 41, 55, 0.9);
+            border-color: rgba(13, 183, 237, 0.5);
+        }
+
+        .component-description h3 {
+            color: #0db7ed;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .component-description p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .component {
+            position: absolute;
+            background: rgba(13, 183, 237, 0.1);
+            border: 2px solid #0db7ed;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .component:hover {
+            background: rgba(13, 183, 237, 0.2);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .component-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #0db7ed;
+        }
+
+        .component-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .component-desc {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .connection {
+            position: absolute;
+            background: #0db7ed;
+            z-index: -1;
+        }
+
+        .connection-label {
+            position: absolute;
+            background: rgba(13, 183, 237, 0.2);
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .horizontal {
+            height: 2px;
+        }
+
+        .vertical {
+            width: 2px;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="slide">
+        <!-- Slide Header -->
+        <div class="slide-header">
+            <h1 class="text-4xl font-bold flex items-center">
+                <i class="fab fa-docker text-blue-400 mr-4"></i>
+                Docker 架构组件
+            </h1>
+        </div>
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Architecture Diagram -->
+            <div class="architecture-diagram">
+                <!-- Left side: Diagram -->
+                <div class="diagram-left">
+                    <!-- Client Components -->
+                    <div class="component" style="width: 180px; height: 100px; top: 40px; left: 100px;">
+                        <i class="fas fa-terminal component-icon"></i>
+                        <div class="component-title">Docker CLI</div>
+                        <div class="component-desc">命令行客户端</div>
+                    </div>
+                    <div class="component" style="width: 180px; height: 100px; top: 40px; left: 340px;">
+                        <i class="fas fa-desktop component-icon"></i>
+                        <div class="component-title">Docker Desktop</div>
+                        <div class="component-desc">图形用户界面</div>
+                    </div>
+                    <!-- REST API Connection -->
+                    <div class="connection horizontal" style="width: 240px; top: 170px; left: 190px;"></div>
+                    <div class="connection vertical" style="height: 30px; top: 140px; left: 190px;"></div>
+                    <div class="connection vertical" style="height: 30px; top: 140px; left: 429px;"></div>
+                    <div class="connection-label" style="top: 172px; left: 280px;">
+                        <i class="fas fa-exchange-alt mr-1"></i> REST API
+                    </div>
+                    <!-- Docker Daemon -->
+                    <div class="component" style="width: 320px; height: 110px; top: 200px; left: 150px;">
+                        <i class="fas fa-cogs component-icon"></i>
+                        <div class="component-title">Docker Daemon (dockerd)</div>
+                        <div class="component-desc">Docker 引擎核心，负责构建和运行容器</div>
+                    </div>
+                    <!-- Connections to Resources -->
+                    <div class="connection vertical" style="height: 50px; top: 310px; left: 310px;"></div>
+                    <!-- Resources Row -->
+                    <div class="component" style="width: 180px; height: 100px; top: 360px; left: 60px;">
+                        <i class="fas fa-copy component-icon"></i>
+                        <div class="component-title">Images</div>
+                        <div class="component-desc">镜像 - 只读模板</div>
+                    </div>
+                    <div class="component" style="width: 180px; height: 100px; top: 360px; left: 280px;">
+                        <i class="fas fa-box component-icon"></i>
+                        <div class="component-title">Containers</div>
+                        <div class="component-desc">容器 - 镜像的运行实例</div>
+                    </div>
+                    <div class="component" style="width: 180px; height: 100px; top: 360px; left: 500px;">
+                        <i class="fas fa-hdd component-icon"></i>
+                        <div class="component-title">Volumes</div>
+                        <div class="component-desc">数据卷 - 持久化存储</div>
+                    </div>
+                    <!-- Connections between Daemon and Resources -->
+                    <div class="connection horizontal" style="width: 110px; top: 410px; left: 150px;"></div>
+                    <div class="connection horizontal" style="width: 110px; top: 410px; left: 370px;"></div>
+                    <!-- Network Connection from Containers -->
+                    <div class="connection vertical" style="height: 50px; top: 460px; left: 370px;"></div>
+                    <!-- Network -->
+                    <div class="component" style="width: 180px; height: 100px; top: 510px; left: 280px;">
+                        <i class="fas fa-network-wired component-icon"></i>
+                        <div class="component-title">Networks</div>
+                        <div class="component-desc">网络管理 - 容器通信</div>
+                    </div>
+                </div>
+                <!-- Right side: Component Descriptions -->
+                <div class="diagram-right">
+                    <div class="component-description">
+                        <h3>Docker CLI</h3>
+                        <p>命令行工具，用于与 Docker 引擎交互</p>
+                    </div>
+                    <div class="component-description">
+                        <h3>Docker Desktop</h3>
+                        <p>提供易用的图形界面，管理容器和镜像</p>
+                    </div>
+                    <div class="component-description">
+                        <h3>Docker Daemon</h3>
+                        <p>后台服务，负责构建、运行和分发容器</p>
+                    </div>
+                    <div class="component-description">
+                        <h3>Images & Containers</h3>
+                        <p>镜像是只读模板，容器是镜像的运行实例</p>
+                    </div>
+                    <div class="component-description">
+                        <h3>Volumes & Networks</h3>
+                        <p>数据卷提供持久化存储，网络管理容器间通信</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- Footer with page number -->
+        <div class="absolute bottom-4 right-8 text-sm text-gray-400">
+            5 / 18
+        </div>
+    </div>
+
+    <!-- PPT导航功能 -->
+    <script src="ppt-mode.js"></script>
+
+</body>
+
+</html>

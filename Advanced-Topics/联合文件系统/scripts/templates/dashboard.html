@@ -1,0 +1,161 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>容器存储监控</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card { background: #f5f5f5; padding: 20px; margin: 10px 0; border-radius: 5px; }
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .metric { background: white; padding: 15px; border-radius: 5px; text-align: center; }
+        .metric h3 { margin: 0 0 10px 0; color: #333; }
+        .metric .value { font-size: 2em; font-weight: bold; color: #007bff; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        .chart-container { width: 100%; height: 400px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>容器存储监控仪表板</h1>
+        
+        <div class="card">
+            <h2>存储概览</h2>
+            <div class="metrics" id="metrics">
+                <!-- 动态加载指标 -->
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>存储使用趋势</h2>
+            <div class="chart-container">
+                <canvas id="storageChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>容器存储详情</h2>
+            <table id="containerTable">
+                <thead>
+                    <tr>
+                        <th>容器名称</th>
+                        <th>镜像</th>
+                        <th>状态</th>
+                        <th>存储驱动</th>
+                        <th>层大小</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 动态加载容器数据 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        let storageChart;
+        const storageData = [];
+        
+        function updateMetrics(data) {
+            const metricsDiv = document.getElementById('metrics');
+            metricsDiv.innerHTML = `
+                <div class="metric">
+                    <h3>存储驱动</h3>
+                    <div class="value">${data.docker_info.storage_driver}</div>
+                </div>
+                <div class="metric">
+                    <h3>容器数量</h3>
+                    <div class="value">${data.docker_info.containers}</div>
+                </div>
+                <div class="metric">
+                    <h3>镜像数量</h3>
+                    <div class="value">${data.docker_info.images}</div>
+                </div>
+                <div class="metric">
+                    <h3>层数量</h3>
+                    <div class="value">${data.overlay_stats.total_layers}</div>
+                </div>
+            `;
+        }
+        
+        function updateChart(data) {
+            const ctx = document.getElementById('storageChart').getContext('2d');
+            
+            storageData.push({
+                time: new Date(data.timestamp),
+                size: data.overlay_stats.total_size
+            });
+            
+            // 保持最近 20 个数据点
+            if (storageData.length > 20) {
+                storageData.shift();
+            }
+            
+            if (storageChart) {
+                storageChart.destroy();
+            }
+            
+            storageChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: storageData.map(d => d.time.toLocaleTimeString()),
+                    datasets: [{
+                        label: '存储使用量 (字节)',
+                        data: storageData.map(d => d.size),
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateContainerTable(containers) {
+            const tbody = document.querySelector('#containerTable tbody');
+            tbody.innerHTML = containers.map(container => `
+                <tr>
+                    <td>${container.name}</td>
+                    <td>${container.image}</td>
+                    <td>${container.status}</td>
+                    <td>${container.storage_driver || 'N/A'}</td>
+                    <td>${formatBytes(container.layer_size || 0)}</td>
+                </tr>
+            `).join('');
+        }
+        
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function fetchData() {
+            fetch('/api/storage')
+                .then(response => response.json())
+                .then(data => {
+                    updateMetrics(data);
+                    updateChart(data);
+                    updateContainerTable(data.containers);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        // 初始加载和定期更新
+        fetchData();
+        setInterval(fetchData, 5000); // 每 5 秒更新一次
+    </script>
+</body>
+</html>

@@ -14,20 +14,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `02-Docker-Installation/` — 跨平台（macOS/Windows/Linux）安装配置
 - `03-Pull-from-DockerHub-and-Run-Docker-Images/` — 镜像拉取与容器生命周期管理
 - `04-Build-new-Docker-Image-and-Run-and-Push-to-DockerHub/` — Dockerfile 编写、镜像构建与推送（含 `Nginx-DockerFiles/` 实战）
-- `04-2-Multi-Stage-Builds/` — 多阶段构建（Dockerfile 为 golang:1.23 → scratch，演示 heredoc `COPY <<EOF` 语法）
+- `04-2-Multi-Stage-Builds/` — 多阶段构建（`Dockerfile` 单阶段对比示例 / `Dockerfile-multi-stages` 为 golang:1.23 → scratch，演示 heredoc `COPY <<EOF` 语法；README 中镜像大小对比为实测数据）
 - `04-3-Multi-Platform-Builds/` — buildx 多平台构建（tonistiigi/xx 交叉编译，`app/main.go` 是 Go 示例程序）
 - `05-Essential-Docker-Commands/` — 命令大全 + 学习脚本工具
 - `Advanced-Topics/` — 进阶专题文章（OCI 介绍、Docker 源码分析、Union Filesystem、containerd OverlayFS、Docker 中运行 GUI 程序），专题目录名用中文
 - `PPT/Docker 动手教程/` — 教程幻灯片（HTML 分页页面 + `ppt-mode.js`）
 
-根目录 `README.md` 是教程总索引，汇总了各章核心内容；修改章节内容时需检查是否同步更新总索引。
+根目录 `README.md` 是**导航型总索引**（学习路径 + 章节目录表 + FAQ），章节正文只在各章 README 维护，不要在总索引中复制正文内容；新增或改名章节时同步更新目录表。
 
 ## 常用命令
 
 ### 验证文档中的构建示例
 
 ```bash
-# 04-2 多阶段构建
+# 04-2 多阶段构建（heredoc 语法需要 buildx / BuildKit，本机已装 docker-buildx 于 ~/.docker/cli-plugins/）
 docker build -f Dockerfile-multi-stages -t multi-stage:latest .
 
 # 04-3 多平台构建（需要 buildx 插件）

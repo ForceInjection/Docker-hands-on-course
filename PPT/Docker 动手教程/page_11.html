@@ -203,23 +203,23 @@
                             Dockerfile 多阶段构建示例
                         </div>
                         <p class="code-block mt-2">
-                            <span class="code-comment"># 构建阶段</span><br />
-                            <span class="code-keyword">FROM</span> <span class="code-string">node:16-alpine</span> <span
-                                class="code-keyword">AS</span> <span class="code-string">builder</span><br />
-                            <span class="code-keyword">WORKDIR</span> <span class="code-string">/app</span><br />
-                            <span class="code-keyword">COPY</span> <span class="code-string">package*.json</span> <span
-                                class="code-string">./</span><br />
-                            <span class="code-keyword">RUN</span> <span class="code-function">npm</span> <span
-                                class="code-function">ci</span> <span
-                                class="code-property">--only=production</span><br /><br />
-                            <span class="code-comment"># 运行阶段</span><br />
-                            <span class="code-keyword">FROM</span> <span class="code-string">nginx:alpine</span><br />
-                            <span class="code-keyword">COPY</span> <span class="code-property">--from=builder</span>
-                            <span class="code-string">/app/dist</span> <span
-                                class="code-string">/usr/share/nginx/html</span><br />
-                            <span class="code-keyword">EXPOSE</span> <span class="code-string">80</span><br />
-                            <span class="code-keyword">CMD</span> <span class="code-function">[&#34;nginx&#34;,
-                                &#34;-g&#34;, &#34;daemon off;&#34;]</span>
+                            <span class="code-comment"># 第一阶段：构建阶段（源码 heredoc 内嵌）</span><br />
+                            <span class="code-keyword">FROM</span> <span class="code-string">golang:1.23</span> <span
+                                class="code-keyword">AS</span> <span class="code-string">build</span><br />
+                            <span class="code-keyword">WORKDIR</span> <span class="code-string">/src</span><br />
+                            <span class="code-keyword">COPY</span> <span class="code-property">&lt;&lt;EOF</span>
+                            <span class="code-string">/src/main.go</span><br />
+                            <span class="code-comment"># ... Go 源码 ...</span><br />
+                            <span class="code-keyword">EOF</span><br />
+                            <span class="code-keyword">RUN</span> <span class="code-function">go</span> <span
+                                class="code-function">build</span> <span
+                                class="code-property">-o /bin/hello ./main.go</span><br /><br />
+                            <span class="code-comment"># 第二阶段：运行阶段（scratch 空镜像）</span><br />
+                            <span class="code-keyword">FROM</span> <span class="code-string">scratch</span><br />
+                            <span class="code-keyword">COPY</span> <span class="code-property">--from=build</span>
+                            <span class="code-string">/bin/hello</span> <span class="code-string">/bin/hello</span><br />
+                            <span class="code-keyword">CMD</span> <span
+                                class="code-function">[&#34;/bin/hello&#34;]</span>
                         </p>
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold flex items-center">
@@ -227,9 +227,9 @@
                                 优化技巧
                             </h3>
                             <ul class="list-disc pl-6 mt-2 space-y-2">
-                                <li>使用 <span class="highlight">alpine</span> 基础镜像，减小体积</li>
                                 <li>多阶段构建，分离构建环境和运行环境</li>
-                                <li>清理缓存文件，减少最终镜像大小</li>
+                                <li>heredoc 语法（<span class="highlight">COPY &lt;&lt;EOF</span>）内嵌源码，免去临时文件</li>
+                                <li>实测效果：<span class="highlight">1.27GB → 3.41MB</span>（减少约 99.7%）</li>
                                 <li>合理使用标签，便于版本管理和更新</li>
                             </ul>
                         </div>

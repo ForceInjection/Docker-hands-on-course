@@ -108,68 +108,33 @@
                             <div class="resource-card flex items-start">
                                 <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
                                 <div>
-                                    <span class="highlight">Docker 官方文档</span>
+                                    <a href="https://docs.docker.com/" target="_blank"
+                                        class="text-blue-300 underline font-semibold">Docker 官方文档</a>
                                     <p class="text-sm text-gray-300">全面的 Docker 使用指南和 API 参考</p>
                                 </div>
                             </div>
                             <div class="resource-card flex items-start">
                                 <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
                                 <div>
-                                    <span class="highlight">Docker Hub</span>
+                                    <a href="https://hub.docker.com/" target="_blank"
+                                        class="text-blue-300 underline font-semibold">Docker Hub</a>
                                     <p class="text-sm text-gray-300">镜像存储和分发中心，包含丰富的官方和用户镜像</p>
                                 </div>
                             </div>
                             <div class="resource-card flex items-start">
                                 <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
                                 <div>
-                                    <span class="highlight">Dockerfile 参考</span>
+                                    <a href="https://docs.docker.com/reference/dockerfile/" target="_blank"
+                                        class="text-blue-300 underline font-semibold">Dockerfile 参考</a>
                                     <p class="text-sm text-gray-300">Dockerfile 指令的详细说明和最佳实践</p>
                                 </div>
                             </div>
                             <div class="resource-card flex items-start">
                                 <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
                                 <div>
-                                    <span class="highlight">Docker Compose 文档</span>
+                                    <a href="https://docs.docker.com/compose/" target="_blank"
+                                        class="text-blue-300 underline font-semibold">Docker Compose 文档</a>
                                     <p class="text-sm text-gray-300">多容器应用编排工具的使用指南</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Practice Projects -->
-                    <div class="mt-6">
-                        <h2 class="section-title">
-                            <div class="section-icon">
-                                <i class="fas fa-laptop-code text-blue-400"></i>
-                            </div>
-                            实践项目建议
-                        </h2>
-                        <div class="space-y-2">
-                            <div class="resource-card flex items-start">
-                                <i class="fas fa-code text-blue-400 mt-1 mr-3"></i>
-                                <div>
-                                    <span class="highlight">Web 应用容器化</span>
-                                    <p class="text-sm text-gray-300">将现有 Web 应用打包成 Docker 镜像</p>
-                                </div>
-                            </div>
-                            <div class="resource-card flex items-start">
-                                <i class="fas fa-network-wired text-blue-400 mt-1 mr-3"></i>
-                                <div>
-                                    <span class="highlight">微服务架构</span>
-                                    <p class="text-sm text-gray-300">使用 Docker Compose 部署多服务应用</p>
-                                </div>
-                            </div>
-                            <div class="resource-card flex items-start">
-                                <i class="fas fa-infinity text-blue-400 mt-1 mr-3"></i>
-                                <div>
-                                    <span class="highlight">CI/CD 集成</span>
-                                    <p class="text-sm text-gray-300">在持续集成流程中使用 Docker</p>
-                                </div>
-                            </div>
-                            <div class="resource-card flex items-start">
-                                <i class="fas fa-users-cog text-blue-400 mt-1 mr-3"></i>
-                                <div>
-                                    <span class="highlight">开发环境标准化</span>
-                                    <p class="text-sm text-gray-300">为团队创建统一的开发环境</p>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +155,8 @@
                                     class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
                                     <i class="fas fa-desktop text-blue-400 text-xl"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold">Docker Desktop</h3>
+                                <h3 class="text-xl font-semibold"><a href="https://www.docker.com/products/docker-desktop/"
+                                        target="_blank" class="text-blue-300 underline">Docker Desktop</a></h3>
                             </div>
                             <p class="text-gray-300">图形化管理界面，适用于开发环境</p>
                             <div class="mt-2 text-sm">
@@ -204,9 +170,27 @@
                             <div class="flex items-center mb-2">
                                 <div
                                     class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
+                                    <i class="fas fa-laptop-code text-blue-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold"><a href="https://github.com/abiosoft/colima"
+                                        target="_blank" class="text-blue-300 underline">Colima</a></h3>
+                            </div>
+                            <p class="text-gray-300">macOS/Linux 轻量容器运行时，本机实测环境</p>
+                            <div class="mt-2 text-sm">
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">macOS</span>
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">Linux</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="flex items-center mb-2">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
                                     <i class="fas fa-server text-blue-400 text-xl"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold">Portainer</h3>
+                                <h3 class="text-xl font-semibold"><a href="https://www.portainer.io/"
+                                        target="_blank" class="text-blue-300 underline">Portainer</a></h3>
                             </div>
                             <p class="text-gray-300">Web 端容器管理界面，支持多种 Docker 环境</p>
                             <div class="mt-2 text-sm">
@@ -221,39 +205,58 @@
                             <div class="flex items-center mb-2">
                                 <div
                                     class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
-                                    <i class="fas fa-drafting-compass text-blue-400 text-xl"></i>
+                                    <i class="fas fa-layer-group text-blue-400 text-xl"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold">Docker Compose</h3>
+                                <h3 class="text-xl font-semibold"><a href="https://github.com/docker/buildx"
+                                        target="_blank" class="text-blue-300 underline">Docker Buildx</a></h3>
                             </div>
-                            <p class="text-gray-300">多容器应用编排工具，定义和运行多容器 Docker 应用</p>
+                            <p class="text-gray-300">官方构建插件，支持多平台构建（本教程 04-3 章）</p>
                             <div class="mt-2 text-sm">
                                 <span
-                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">YAML</span>
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">构建</span>
                                 <span
-                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">命令行</span>
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">多平台</span>
                             </div>
                         </div>
                         <div class="tool-card">
                             <div class="flex items-center mb-2">
                                 <div
                                     class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
-                                    <i class="fas fa-sync-alt text-blue-400 text-xl"></i>
+                                    <i class="fas fa-search-plus text-blue-400 text-xl"></i>
                                 </div>
-                                <h3 class="text-xl font-semibold">Watchtower</h3>
+                                <h3 class="text-xl font-semibold"><a href="https://github.com/wagoodman/dive"
+                                        target="_blank" class="text-blue-300 underline">Dive</a></h3>
                             </div>
-                            <p class="text-gray-300">自动更新容器镜像，保持应用最新状态</p>
+                            <p class="text-gray-300">镜像层分析工具，定位镜像体积问题</p>
                             <div class="mt-2 text-sm">
                                 <span
-                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">自动更新</span>
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">镜像分析</span>
                                 <span
-                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">轻量级</span>
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">开源</span>
+                            </div>
+                        </div>
+                        <div class="tool-card">
+                            <div class="flex items-center mb-2">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-blue-400 bg-opacity-20 flex items-center justify-center mr-3">
+                                    <i class="fas fa-shield-alt text-blue-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold"><a href="https://github.com/aquasecurity/trivy"
+                                        target="_blank" class="text-blue-300 underline">Trivy</a></h3>
+                            </div>
+                            <p class="text-gray-300">镜像与容器安全扫描，发现已知漏洞</p>
+                            <div class="mt-2 text-sm">
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">安全扫描</span>
+                                <span
+                                    class="inline-block bg-blue-900 bg-opacity-50 rounded-full px-3 py-1 mr-2 mb-1">开源</span>
                             </div>
                         </div>
                     </div>
                     <div class="mt-6 p-4 bg-blue-900 bg-opacity-30 rounded-lg">
                         <div class="flex items-center">
                             <i class="fas fa-lightbulb text-yellow-400 text-xl mr-3"></i>
-                            <p class="text-sm">工具选择建议：根据实际需求选择合适的工具组合，初学者可从 Docker Desktop 开始，逐步过渡到更专业的工具</p>
+                            <p class="text-sm">工具选择建议：初学者可从 Docker Desktop 开始；macOS/Linux 用户也可选择 Colima 这类轻量方案（本教程的实测环境）</p>
                         </div>
                     </div>
                 </div>

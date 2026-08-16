@@ -30,11 +30,11 @@
         }
 
         .objective-item {
-            padding: 0.75rem;
+            padding: 0.5rem;
             border-radius: 8px;
             background: rgba(13, 183, 237, 0.1);
             border-left: 4px solid #0db7ed;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             transition: all 0.3s ease;
         }
 
@@ -45,7 +45,7 @@
 
         .path-node {
             width: 150px;
-            height: 70px;
+            height: 54px;
             background: rgba(13, 183, 237, 0.2);
             border: 2px solid #0db7ed;
             border-radius: 8px;
@@ -65,8 +65,8 @@
 
         .path-arrow {
             color: #0db7ed;
-            font-size: 1.5rem;
-            margin: 0 1rem;
+            font-size: 1.25rem;
+            margin: 0 0.5rem;
         }
 
         .time-card {
@@ -100,7 +100,7 @@
                 <div>
                     <h2 class="text-2xl font-semibold mb-4 flex items-center">
                         <i class="fas fa-bullseye text-blue-400 mr-2"></i>
-                        六大学习目标
+                        八大学习目标
                     </h2>
                     <div class="space-y-3">
                         <div class="objective-item flex items-start">
@@ -127,6 +127,14 @@
                             <i class="fas fa-rocket text-blue-400 mt-1 mr-3"></i>
                             <span>具备容器化应用的开发和部署能力</span>
                         </div>
+                        <div class="objective-item flex items-start">
+                            <i class="fas fa-layer-group text-blue-400 mt-1 mr-3"></i>
+                            <span>掌握多阶段构建与多平台镜像构建技术</span>
+                        </div>
+                        <div class="objective-item flex items-start">
+                            <i class="fas fa-microscope text-blue-400 mt-1 mr-3"></i>
+                            <span>理解容器底层原理（OCI、联合文件系统等）</span>
+                        </div>
                     </div>
                     <!-- Time Estimates -->
                     <div class="time-card mt-6">
@@ -137,11 +145,11 @@
                         <div class="grid grid-cols-2 gap-2">
                             <div class="flex items-center">
                                 <i class="fas fa-hourglass-half text-blue-400 mr-2"></i>
-                                <span>总学习时间: <span class="highlight">6-8 小时</span></span>
+                                <span>基础部分: <span class="highlight">6-8 小时</span></span>
                             </div>
                             <div class="flex items-center">
                                 <i class="fas fa-book text-blue-400 mr-2"></i>
-                                <span>理论学习: <span class="highlight">2-3 小时</span></span>
+                                <span>进阶部分: <span class="highlight">4-6 小时</span></span>
                             </div>
                             <div class="flex items-center">
                                 <i class="fas fa-laptop-code text-blue-400 mr-2"></i>
@@ -149,7 +157,7 @@
                             </div>
                             <div class="flex items-center">
                                 <i class="fas fa-calendar-alt text-blue-400 mr-2"></i>
-                                <span>建议周期: <span class="highlight">1-2 周</span></span>
+                                <span>建议周期: <span class="highlight">2-3 周</span></span>
                             </div>
                         </div>
                     </div>
@@ -208,8 +216,30 @@
                         <div class="path-step flex items-center">
                             <div class="path-node">
                                 <div>
+                                    <i class="fas fa-layer-group text-blue-400 mb-1"></i>
+                                    <div>构建进阶:<br />多阶段与多平台</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="path-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="path-step flex items-center">
+                            <div class="path-node">
+                                <div>
                                     <i class="fas fa-terminal text-blue-400 mb-1"></i>
                                     <div>第5章:<br />核心命令掌握</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="path-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="path-step flex items-center">
+                            <div class="path-node">
+                                <div>
+                                    <i class="fas fa-graduation-cap text-blue-400 mb-1"></i>
+                                    <div>进阶专题:<br />底层原理与特殊场景</div>
                                 </div>
                             </div>
                         </div>

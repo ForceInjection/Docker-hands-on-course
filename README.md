@@ -110,22 +110,23 @@ A: 优化 Dockerfile、减少层数、使用镜像缓存。
 
 - [Docker 官方文档](https://docs.docker.com/)
 - [Docker Hub](https://hub.docker.com/)
-- [Dockerfile 参考](https://docs.docker.com/engine/reference/builder/)
+- [Dockerfile 参考](https://docs.docker.com/reference/dockerfile/)
 
-**实践项目建议：**
+**推荐工具：**
 
-1. **Web 应用容器化**：将现有 Web 应用打包成 Docker 镜像
-2. **微服务架构**：使用 Docker Compose 部署多服务应用
-3. **CI/CD 集成**：在持续集成流程中使用 Docker
-4. **开发环境标准化**：为团队创建统一的开发环境
-
-**推荐工具：** Docker Desktop（图形界面）、Portainer（Web 端管理）、Docker Compose（多容器编排）、Watchtower（自动更新镜像）
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)：图形化管理界面，适用于开发环境
+- [Colima](https://github.com/abiosoft/colima)：macOS/Linux 轻量容器运行时（本教程实测环境）
+- [Portainer](https://www.portainer.io/)：Web 端容器管理界面
+- [Docker Buildx](https://github.com/docker/buildx)：官方构建插件，支持多平台构建（04-3 章）
+- [Dive](https://github.com/wagoodman/dive)：镜像层分析工具
+- [Trivy](https://github.com/aquasecurity/trivy)：镜像与容器安全扫描
 
 ### 4.2 🚀 下一步学习建议
 
-1. **学习 Kubernetes**：容器编排和集群管理
-2. **实践 DevOps**：将 Docker 集成到 CI/CD 流程
-3. **探索云原生**：学习微服务、服务网格等技术
+完成本教程后，推荐继续学习同系列教程：
+
+- 🐳 [**Kubernetes 动手教程**](https://github.com/ForceInjection/kubernetes-hands-on-course)：容器编排和集群管理
+- ☁️ [**云原生开发**](https://github.com/ForceInjection/cloud-native-dev)：《使用云原生技术进行软件开发》课程课件，涵盖 Docker、Kubernetes、微服务与 CI/CD
 
 ### 4.3 📞 获取帮助
 

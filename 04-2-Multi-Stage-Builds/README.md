@@ -19,15 +19,15 @@
 
 ```dockerfile
 # ❌ 传统单阶段构建的问题
-FROM golang:1.19
-WORKDIR /app
-COPY . .
-RUN go build -o myapp
-EXPOSE 8080
-CMD ["./myapp"]
+FROM golang:1.23
+COPY <<EOF ./main.go
+# ... Go 源码通过 heredoc 语法内嵌，见下文「查看源代码」 ...
+EOF
+RUN go build -o /bin/hello ./main.go
+CMD ["/bin/hello"]
 
 # 问题：
-# 1. 最终镜像包含完整的 Go 编译环境（~800MB）
+# 1. 最终镜像包含完整的 Go 编译环境（实测 1.27GB）
 # 2. 包含源代码和构建工具
 # 3. 安全风险：暴露了构建过程和依赖
 # 4. 镜像体积大，传输和存储成本高
@@ -38,20 +38,20 @@ CMD ["./myapp"]
 ```dockerfile
 # ✅ 多阶段构建解决方案
 # 第一阶段：构建阶段
-FROM golang:1.19 AS builder
-WORKDIR /app
-COPY . .
-RUN go build -o myapp
+FROM golang:1.23 AS build
+WORKDIR /src
+COPY <<EOF /src/main.go
+# ... Go 源码通过 heredoc 语法内嵌，见下文「查看源代码」 ...
+EOF
+RUN go build -o /bin/hello ./main.go
 
 # 第二阶段：运行阶段
-FROM alpine:latest
-WORKDIR /app
-COPY --from=builder /app/myapp .
-EXPOSE 8080
-CMD ["./myapp"]
+FROM scratch
+COPY --from=build /bin/hello /bin/hello
+CMD ["/bin/hello"]
 
 # 优势：
-# 1. 最终镜像只有 ~10MB
+# 1. 最终镜像只有 3.41MB（实测）
 # 2. 不包含构建工具和源代码
 # 3. 提高安全性
 # 4. 减少攻击面
@@ -77,12 +77,12 @@ COPY --from=nginx:alpine /etc/nginx/nginx.conf /etc/nginx/
 
 ```dockerfile
 # 方式 1：使用阶段名称（推荐）
-FROM golang:1.19 AS builder
+FROM golang:1.23 AS builder
 FROM alpine:latest
 COPY --from=builder /app/myapp .
 
 # 方式 2：使用阶段索引（从 0 开始）
-FROM golang:1.19
+FROM golang:1.23
 FROM alpine:latest
 COPY --from=0 /app/myapp .
 
@@ -93,151 +93,151 @@ COPY --from=nginx:alpine /etc/nginx/nginx.conf /etc/nginx/
 
 ## 📁 项目结构
 
-让我们查看本章的示例项目：
+本章示例项目非常精简：
 
 ```bash
 # 查看项目文件
 ls -la
 
-# 预期文件结构：
-# ├── Dockerfile              # 单阶段构建示例
-# ├── Dockerfile-multi-stages # 多阶段构建示例
-# ├── main.go                 # Go 应用源代码
-# ├── go.mod                  # Go 模块文件
-# └── README.md               # 本文档
+# 实际文件结构：
+# ├── Dockerfile                # 单阶段构建示例（用于对比）
+# ├── Dockerfile-multi-stages   # 多阶段构建示例
+# ├── docker-multi-stage-build-cn.md  # 延伸阅读：多阶段构建详解文章
+# └── README.md                 # 本文档
 ```
+
+> 💡 **注意**：示例的 Go 源码通过 BuildKit 的 heredoc 语法（`COPY <<EOF`）直接内嵌在 Dockerfile 中，因此不需要单独的 `main.go` / `go.mod` 文件。这也是 heredoc 语法的教学演示点。
 
 ## 🔧 实践示例：Go 应用多阶段构建
 
 ### 查看源代码
 
-```bash
-# 查看 Go 应用源代码
-cat main.go
+本章的 Go 源码通过 heredoc 语法内嵌在两个 Dockerfile 中，内容完全相同：
+
+```dockerfile
+# 两个 Dockerfile 中共有的源码片段（heredoc 内嵌）
+COPY <<EOF ./main.go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("hello, world")
+}
+EOF
 ```
+
+这是一个刻意最小化的 "hello, world" 程序——让关注点完全放在「镜像的构建方式」上。
 
 ### 单阶段构建对比
 
-首先，让我们看看传统的单阶段构建：
+首先构建传统的单阶段镜像，本章的 `Dockerfile` 就是单阶段构建：
 
 ```dockerfile
-# Dockerfile（单阶段构建）
-FROM golang:1.19
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY . .
-RUN go build -o main .
-EXPOSE 8080
-CMD ["./main"]
+# Dockerfile（单阶段构建，本章实际文件）
+# syntax=docker/dockerfile:1
+FROM golang:1.23
+WORKDIR /src
+COPY <<EOF ./main.go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("hello, world")
+}
+EOF
+RUN go build -o /bin/hello ./main.go
+CMD ["/bin/hello"]
 ```
 
 ```bash
 # 构建单阶段镜像
-docker build -t single-stage-app:v1 .
+docker build -f Dockerfile -t single-stage-app:v1 .
 
 # 查看镜像大小
 docker images single-stage-app:v1
 
-# 预期输出：镜像大小约 800MB+
+# ✅ 实测输出（Apple Silicon + colima）：
+# REPOSITORY         TAG       IMAGE ID       CREATED          SIZE
+# single-stage-app   v1        xxx            2 minutes ago    1.27GB
 ```
 
 ### 多阶段构建实现
 
-现在让我们使用多阶段构建：
+现在使用多阶段构建。本章的 `Dockerfile-multi-stages` 把「构建」和「运行」拆成两个阶段：
 
 ```dockerfile
-# Dockerfile-multi-stages（多阶段构建）
+# Dockerfile-multi-stages（多阶段构建，本章实际文件）
+# syntax=docker/dockerfile:1
 # 第一阶段：构建阶段
-FROM golang:1.19 AS builder
+FROM golang:1.23 AS build
+WORKDIR /src
 
-# 设置工作目录
-WORKDIR /app
+# 源码通过 heredoc 语法内嵌，无需独立的 .go 文件
+COPY <<EOF /src/main.go
+package main
 
-# 复制 go mod 文件并下载依赖（利用缓存）
-COPY go.mod go.sum ./
-RUN go mod download
+import "fmt"
 
-# 复制源代码
-COPY . .
+func main() {
+  fmt.Println("hello, world")
+}
+EOF
 
-# 构建应用（静态链接）
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+# 编译为二进制
+RUN go build -o /bin/hello ./main.go
 
-# 第二阶段：运行阶段
-FROM alpine:latest
-
-# 安装 ca-certificates（用于 HTTPS 请求）
-RUN apk --no-cache add ca-certificates
-
-# 创建非 root 用户
-RUN addgroup -g 1001 -S appgroup && \
-    adduser -S -D -H -u 1001 -h /app -s /sbin/nologin -G appgroup -g appgroup appuser
-
-# 设置工作目录
-WORKDIR /app
-
-# 从构建阶段复制二进制文件
-COPY --from=builder /app/main .
-
-# 设置文件权限
-RUN chown -R appuser:appgroup /app
-
-# 切换到非 root 用户
-USER appuser
-
-# 暴露端口
-EXPOSE 8080
-
-# 启动应用
-CMD ["./main"]
+# 第二阶段：运行阶段——scratch 空镜像，只保留二进制
+FROM scratch
+COPY --from=build /bin/hello /bin/hello
+CMD ["/bin/hello"]
 ```
+
+> 💡 **heredoc 语法**：`COPY <<EOF` 是 BuildKit 支持的 heredoc 写法，可以把小段文件内容直接内嵌在 Dockerfile 中，免去单独创建源文件。该语法需要 BuildKit（`docker buildx`）支持，现代 Docker 版本默认启用；若 `docker build` 提示 legacy builder 或 heredoc 语法错误，请先安装 buildx 插件（参见[多平台构建](../04-3-Multi-Platform-Builds/)章节的安装方法）。
 
 ### 构建和对比
 
 ```bash
 # 构建多阶段镜像
-docker build -f Dockerfile-multi-stages -t stacksimplify/multi-stage-builds:v1 .
+docker build -f Dockerfile-multi-stages -t multi-stage-builds:v1 .
 
-# 或者使用您的 Docker Hub ID
-docker build -f Dockerfile-multi-stages -t <your-docker-hub-id>/multi-stage-builds:v1 .
-
-# 查看构建过程
-docker build -f Dockerfile-multi-stages -t stacksimplify/multi-stage-builds:v1 . --no-cache
+# 无缓存重新构建（观察每一步的执行过程）
+docker build --no-cache -f Dockerfile-multi-stages -t multi-stage-builds:v1 .
 ```
+
+> ⚠️ **注意**：`--no-cache` 等构建选项必须放在构建上下文（`.`）之前。
 
 ### 构建过程详解
 
-```bash
-# 详细构建输出示例
-$ docker build -f Dockerfile-multi-stages -t stacksimplify/multi-stage-builds:v1 .
-[+] Building 45.2s (16/16) FINISHED
- => [internal] load build definition from Dockerfile-multi-stages        0.0s
- => => transferring dockerfile: 789B                                      0.0s
- => [internal] load .dockerignore                                         0.0s
- => => transferring context: 2B                                           0.0s
- => [internal] load metadata for docker.io/library/alpine:latest         1.2s
- => [internal] load metadata for docker.io/library/golang:1.19           1.3s
- => [builder 1/6] FROM docker.io/library/golang:1.19@sha256:abc123...     0.0s
- => [internal] load build context                                         0.0s
- => => transferring context: 1.23kB                                       0.0s
- => [stage-1 1/4] FROM docker.io/library/alpine:latest@sha256:def456...   0.0s
- => CACHED [builder 2/6] WORKDIR /app                                     0.0s
- => CACHED [builder 3/6] COPY go.mod go.sum ./                            0.0s
- => CACHED [builder 4/6] RUN go mod download                              0.0s
- => [builder 5/6] COPY . .                                                0.1s
- => [builder 6/6] RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .  42.3s
- => CACHED [stage-1 2/4] RUN apk --no-cache add ca-certificates           0.0s
- => CACHED [stage-1 3/4] RUN addgroup -g 1001 -S appgroup &&     adduser -S -D -H -u 1001 -h /app -s /sbin/nologin -G appgroup -g appgroup appuser  0.0s
- => CACHED [stage-1 4/4] WORKDIR /app                                     0.0s
- => [stage-1 5/7] COPY --from=builder /app/main .                         0.1s
- => [stage-1 6/7] RUN chown -R appuser:appgroup /app                      0.3s
- => [stage-1 7/7] USER appuser                                            0.0s
- => exporting to image                                                     0.1s
- => => exporting layers                                                    0.1s
- => => writing image sha256:ghi789...                                      0.0s
- => => naming to docker.io/stacksimplify/multi-stage-builds:v1            0.0s
+无缓存构建的详细输出（✅ 实测，Apple Silicon + colima + buildx）：
+
+```text
+$ docker build --no-cache -f Dockerfile-multi-stages -t multi-stage-builds:v1 .
+#0 building with "colima" instance using docker driver
+#1 [internal] load build definition from Dockerfile-multi-stages
+#1 transferring dockerfile: 331B done
+#1 DONE 0.0s
+#4 [internal] load metadata for docker.io/library/golang:1.23
+#4 DONE 0.9s
+#6 [build 1/4] FROM docker.io/library/golang:1.23@sha256:60deed... done
+#8 [build 2/4] WORKDIR /src
+#9 [build 3/4] COPY <<EOF /src/main.go
+#9 DONE 0.0s
+#10 [build 4/4] RUN go build -o /bin/hello ./main.go
+#10 DONE 3.0s
+#11 [stage-1 1/1] COPY --from=build /bin/hello /bin/hello
+#12 exporting to image
+#12 exporting layers 0.1s done
+#12 naming to docker.io/library/multi-stage-builds:v1 done
+#12 unpacking to docker.io/library/multi-stage-builds:v1 0.0s done
 ```
+
+关键观察：
+
+- `[build x/4]` 是第一阶段（构建）的 4 个步骤，`[stage-1 1/1]` 是第二阶段（运行），两个阶段各用各的基础镜像
+- heredoc 步骤在输出中显示为 `COPY <<EOF /src/main.go`
+- 第二阶段只有 1 步：把编译产物复制到 `scratch` 空镜像
 
 ### 镜像大小对比
 
@@ -245,12 +245,12 @@ $ docker build -f Dockerfile-multi-stages -t stacksimplify/multi-stage-builds:v1
 # 对比镜像大小
 docker images | grep -E "(single-stage-app|multi-stage-builds)"
 
-# 预期输出对比：
-# single-stage-app        v1      abc123    2 minutes ago    862MB
-# multi-stage-builds      v1      def456    1 minute ago     12.3MB
+# ✅ 实测输出对比（Apple Silicon + colima）：
+# single-stage-app        v1      xxx    2 minutes ago    1.27GB
+# multi-stage-builds      v1      xxx    1 minute ago     3.41MB
 
 # 计算节省的空间
-echo "镜像大小减少了约 98.6%"
+echo "镜像大小减少了约 99.7%"
 ```
 
 ## 🚀 运行和测试
@@ -258,42 +258,52 @@ echo "镜像大小减少了约 98.6%"
 ### 运行多阶段构建的应用
 
 ```bash
-# 运行应用
-docker run --name multi-stage-app -p 8080:8080 -d stacksimplify/multi-stage-builds:v1
+# 运行应用（scratch 镜像只有一个静态二进制，无需任何运行时依赖）
+docker run --rm multi-stage-builds:v1
 
-# 检查容器状态
-docker ps
+# ✅ 实测输出：
+# hello, world
 
-# 查看容器日志
-docker logs multi-stage-app
+# 单阶段镜像运行结果相同，但携带了整套 Go 工具链
+docker run --rm single-stage-app:v1
 
-# 测试应用
-curl http://localhost:8080
-
-# 预期输出：
-# Hello, World! This is a multi-stage build example.
+# ✅ 实测输出：
+# hello, world
 ```
 
-### 性能和安全测试
+### 安全性验证：scratch 镜像里到底有什么
+
+`scratch` 镜像没有 shell，无法用 `docker exec` 进入，改用导出方式查看文件系统：
 
 ```bash
-# 检查容器内部（安全性验证）
-docker exec -it multi-stage-app /bin/sh
+# 导出多阶段镜像的文件系统（✅ 实测输出）
+cid=$(docker create multi-stage-builds:v1)
+docker export $cid | tar -t
+docker rm $cid
 
-# 在容器内部执行：
-whoami          # 应该显示 appuser
-ls -la          # 查看文件权限
-ps aux          # 查看运行进程
-which go        # 应该找不到 go 命令
-which gcc       # 应该找不到 gcc 命令
-exit
+# bin/hello  ← 整个镜像只有一个可执行文件！
+# etc/hostname、etc/hosts、etc/resolv.conf 为 Docker 运行时注入，不属于镜像
 
-# 检查镜像层
-docker history stacksimplify/multi-stage-builds:v1
+# 查看镜像层历史：整个镜像只有两层（✅ 实测输出）
+docker history multi-stage-builds:v1
 
-# 检查镜像内容
-docker run --rm -it stacksimplify/multi-stage-builds:v1 /bin/sh -c "ls -la /app"
+# IMAGE      CREATED      CREATED BY                     SIZE
+# <latest>   ...          CMD ["/bin/hello"]             0B
+# <latest>   ...          COPY /bin/hello /bin/hello     2.17MB
 ```
+
+作为对比，查看单阶段镜像的层历史：
+
+```bash
+docker history single-stage-app:v1
+
+# ✅ 实测输出（节选）——Go 工具链层约 279MB，编译层约 34.4MB，
+# 这些在生产镜像中全部是多余的攻击面：
+# COPY /target/ / # buildkit                           279MB
+# RUN /bin/sh -c go build -o /bin/hello ./main...      34.4MB
+```
+
+> 💡 如需进入构建环境调试（例如检查 `go version`），scratch 运行阶段无法满足，可用 `docker build --target build` 构建出第一阶段的调试镜像，详见下文「构建特定阶段」。
 
 ## 🔧 高级多阶段构建技巧
 
@@ -308,7 +318,7 @@ RUN npm install
 COPY frontend/ .
 RUN npm run build
 
-FROM golang:1.19 AS backend-builder
+FROM golang:1.23 AS backend-builder
 WORKDIR /app/backend
 COPY backend/go.mod backend/go.sum ./
 RUN go mod download
@@ -351,7 +361,7 @@ CMD ["./app"]
 
 ```dockerfile
 # 支持多架构的多阶段构建
-FROM --platform=$BUILDPLATFORM golang:1.19 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.23 AS builder
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 ARG TARGETOS
@@ -371,7 +381,7 @@ CMD ["./app"]
 
 ```dockerfile
 # 优化构建缓存
-FROM golang:1.19 AS builder
+FROM golang:1.23 AS builder
 WORKDIR /app
 
 # 先复制依赖文件（利用 Docker 层缓存）
@@ -447,10 +457,11 @@ CMD ["java", "-jar", "app.jar"]
 
 ```bash
 # 只构建到特定阶段（用于调试）
-docker build --target builder -t debug-builder .
+# 注意：--target 使用阶段名称，本章多阶段 Dockerfile 中为 build
+docker build -f Dockerfile-multi-stages --target build -t debug-build .
 
 # 运行构建阶段进行调试
-docker run -it --rm debug-builder /bin/bash
+docker run -it --rm debug-build /bin/bash
 
 # 在构建阶段内部检查
 ls -la
@@ -481,10 +492,10 @@ brew install dive  # macOS
 sudo apt-get install dive  # Ubuntu
 
 # 分析镜像
-dive stacksimplify/multi-stage-builds:v1
+dive multi-stage-builds:v1
 
 # 使用 docker history 查看层信息
-docker history stacksimplify/multi-stage-builds:v1
+docker history multi-stage-builds:v1
 ```
 
 ## 📊 性能对比测试
@@ -508,10 +519,10 @@ time docker build -f Dockerfile-multi-stages -t multi-stage-test-2 .
 # 模拟镜像推送时间（基于大小估算）
 docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" | grep -E "(single-stage|multi-stage)"
 
-# 计算传输时间差异（假设网络速度 10MB/s）
-echo "单阶段镜像传输时间: ~86 秒"
-echo "多阶段镜像传输时间: ~1.2 秒"
-echo "传输时间节省: ~98.6%"
+# 计算传输时间差异（假设网络速度 10MB/s，基于实测大小 1.27GB / 3.41MB）
+echo "单阶段镜像传输时间: ~127 秒"
+echo "多阶段镜像传输时间: ~0.34 秒"
+echo "传输时间节省: ~99.7%"
 ```
 
 ## 🛡️ 安全最佳实践
@@ -520,7 +531,7 @@ echo "传输时间节省: ~98.6%"
 
 ```dockerfile
 # ✅ 好的实践
-FROM golang:1.19 AS builder
+FROM golang:1.23 AS builder
 # ... 构建过程 ...
 
 # 使用 distroless 或 scratch 镜像
@@ -567,7 +578,7 @@ COPY --from=builder --chown=appuser:appgroup /app/binary /app/
 1. **使用具体的基础镜像标签**
 
    ```dockerfile
-   FROM golang:1.19-alpine  # ✅ 具体版本
+   FROM golang:1.23-alpine  # ✅ 具体版本
    FROM golang:latest       # ❌ 避免使用 latest
    ```
 
@@ -595,7 +606,7 @@ COPY --from=builder --chown=appuser:appgroup /app/binary /app/
 4. **合理命名构建阶段**
 
    ```dockerfile
-   FROM golang:1.19 AS builder      # ✅ 描述性名称
+   FROM golang:1.23 AS builder      # ✅ 描述性名称
    FROM alpine:latest AS runtime    # ✅ 清晰的用途
    ```
 
@@ -667,7 +678,7 @@ COPY --from=builder --chown=appuser:appgroup /app/binary /app/
 
 **关键收获：**
 
-- 🎯 镜像大小可以减少 90%+
+- 🎯 镜像大小可以减少 99%+（实测 1.27GB → 3.41MB）
 - 🛡️ 显著提高安全性
 - ⚡ 优化构建和部署效率
 - 🔧 掌握生产级 Docker 构建技能

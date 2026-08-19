@@ -112,7 +112,7 @@ docker pull stacksimplify/dockerintro-springboot-helloworld-rest-api:1.0.0-RELEA
 docker pull nginx
 
 # 拉取特定版本
-docker pull nginx:1.21-alpine
+docker pull nginx:1.27-alpine
 
 # 拉取所有标签
 docker pull --all-tags nginx

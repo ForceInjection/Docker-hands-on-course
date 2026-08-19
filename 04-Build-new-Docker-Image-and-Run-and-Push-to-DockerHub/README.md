@@ -841,7 +841,7 @@ echo "node_modules" >> .dockerignore
 echo "*.log" >> .dockerignore
 
 # 问题 2：基础镜像拉取失败
-# 解决方案：使用镜像加速器
+# 解决方案：检查网络与代理配置，可显式指定目标平台重试
 docker pull --platform linux/amd64 nginx:alpine
 
 # 问题 3：推送失败

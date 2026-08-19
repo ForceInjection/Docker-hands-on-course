@@ -12,8 +12,6 @@ RUN xx-apt install -y libc6-dev gcc
 ENV CGO_ENABLED=1
 WORKDIR /app
 
-# 指定目标平台
-ARG TARGETPLATFORM
 RUN echo "Building for platform: $TARGETPLATFORM"
 
 # 设置环境变量以指定构建平台架构

@@ -64,7 +64,7 @@
 |`docker images`|列出所有本地镜像|`docker images`|查看本地镜像库|
 |`docker images -q`|仅显示镜像ID|`docker images -q`|批量操作镜像|
 |`docker pull 镜像名`|拉取镜像|`docker pull nginx:latest`|获取最新镜像|
-|`docker pull 镜像名:标签`|拉取指定版本镜像|`docker pull nginx:1.21-alpine`|获取特定版本|
+|`docker pull 镜像名:标签`|拉取指定版本镜像|`docker pull nginx:1.27-alpine`|获取特定版本|
 |`docker push 镜像名`|推送镜像到仓库|`docker push myapp:v1.0`|发布自定义镜像|
 |`docker rmi 镜像ID`|删除镜像|`docker rmi nginx:latest`|清理不需要的镜像|
 |`docker rmi -f 镜像ID`|强制删除镜像|`docker rmi -f nginx:latest`|强制清理镜像|

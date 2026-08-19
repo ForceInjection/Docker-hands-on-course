@@ -26,15 +26,13 @@ FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
 
 FROM --platform=$BUILDPLATFORM alpine
 
-将 xx 脚本复制到你的构建阶段
-
+# 将 xx 脚本复制到你的构建阶段
 COPY --from=xx / /
 
-导出 TARGETPLATFORM（或其他 TARGET*）
-
+# 导出 TARGETPLATFORM（或其他 TARGET*）
 ARG TARGETPLATFORM
 
-你现在可以调用 xx-* 命令
+# 你现在可以调用 xx-* 命令
 
 RUN xx-info env
 ```
@@ -94,14 +92,14 @@ TARGETVARIANT=
 这些脚本允许管理软件包（通常是安装新软件包）来自 Alpine 或 Debian 仓库。它们可以被调用，并接受常规 `apk` 或 `apt/apt-get` 命令接受的任何参数。如果为非原生架构交叉编译，将自动添加目标架构的仓库，并且从那里安装软件包。在 Alpine 上，不允许在同一个根目录下为不同架构安装软件包，因此 `xx-apk` 在次级根目录 `/${triple}` 下安装软件包。这些脚本旨在安装编译器可能需要的头文件和库。为了避免不必要的垃圾，安装时会跳过非原生二进制文件下的 `*/bin`。
 
 ```dockerfile
-alpine
+FROM alpine
 
 ARG TARGETPLATFORM
 RUN xx-apk add --no-cache musl-dev zlib-dev
 ```
 
 ```dockerfile
-debian
+FROM debian
 
 ARG TARGETPLATFORM
 RUN xx-apt-get install -y libc6-dev zlib1g-dev
@@ -152,8 +150,7 @@ Musl 可以通过以下方式安装
 
 RUN apk add clang lld
 
-复制源代码
-
+# 复制源代码
 ARG TARGETPLATFORM
 RUN xx-apk add gcc musl-dev
 RUN xx-clang -o hello hello.c && \
@@ -195,8 +192,7 @@ RUN $(xx-info)-clang -o hello hello.c
 
 RUN apt-get update && apt-get install -y clang lld
 
-复制源代码
-
+# 复制源代码
 ARG TARGETPLATFORM
 RUN xx-apt install -y libc6-dev
 RUN xx-clang -o hello hello.c
@@ -204,14 +200,12 @@ RUN xx-clang -o hello hello.c
 
 参考上一节了解其他变体。
 
-如果你想使用 `GCC` 而不是 `Clang` 进行构建
-，你需要使用 `xx-apt-get` 额外安装 gcc 和 binutils 软件包。`xx-apt-get` 将自动安装生成当前目标架构二进制文件的软件包。然后你可以直接调用 GCC，使用正确的目标三元组。请注意，Debian 当前只有在你的原生平台是 amd64 或 arm64 时才提供 GCC 交叉编译软件包。
+如果你想使用 `GCC` 而不是 `Clang` 进行构建，你需要使用 `xx-apt-get` 额外安装 gcc 和 binutils 软件包。`xx-apt-get` 将自动安装生成当前目标架构二进制文件的软件包。然后你可以直接调用 GCC，使用正确的目标三元组。请注意，Debian 当前只有在你的原生平台是 amd64 或 arm64 时才提供 GCC 交叉编译软件包。
 
 ```dockerfile
 ...
 
-复制源代码
-
+# 复制源代码
 ARG TARGETPLATFORM
 RUN xx-apt-get install -y binutils gcc libc6-dev
 RUN $(xx-info)-gcc -o hello hello.c
@@ -478,8 +472,7 @@ FROM --platform=$BUILDPLATFORM debian:bookworm
 RUN apt-get update && apt-get install -y clang lld cargo
 ARG TARGETPLATFORM
 RUN xx-apt-get install xx-c-essentials
-RUN xx-cargo build --release --target-dir
- ./build && \
+RUN xx-cargo build --release --target-dir ./build && \
     xx-verify ./build/$(xx-cargo --print-target-triple)/release/hello_cargo
 ```
 

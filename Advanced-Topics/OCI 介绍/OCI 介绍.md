@@ -3462,7 +3462,7 @@ spec:
     spec:
       containers:
       - name: web-container
-        image: nginx:1.21-alpine  # OCI 兼容镜像
+        image: nginx:1.27-alpine  # OCI 兼容镜像
         ports:
         - containerPort: 80
         resources:

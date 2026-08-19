@@ -45,18 +45,13 @@ flowchart TD
 
 ### macOS 系统要求
 
-- **操作系统**：macOS 10.15 或更高版本
-- **硬件**：2010 年或更新的 Mac，支持 Intel 或 Apple Silicon
-- **内存**：至少 4GB RAM
-- **磁盘空间**：至少 2.5GB 可用空间
+- **芯片**：支持 Apple Silicon 与 Intel
+- **具体系统版本与硬件要求以官方文档为准**：[Docker Desktop for Mac 安装与系统要求](https://docs.docker.com/desktop/setup/install/mac-install/)
 
 ### Windows 系统要求
 
-- **操作系统**：Windows 10 64-bit Pro, Enterprise, Education (Build 19041 或更高)
-- **功能**：启用 Hyper-V 和容器 Windows 功能
-- **硬件**：支持 SLAT 的 64 位处理器
-- **内存**：至少 4GB RAM
-- **BIOS**：启用虚拟化支持
+- **功能**：需要启用 WSL 2 或 Hyper-V
+- **具体系统版本与硬件要求以官方文档为准**：[Docker Desktop for Windows 安装与系统要求](https://docs.docker.com/desktop/setup/install/windows-install/)
 
 ### Linux 系统要求
 
@@ -69,7 +64,7 @@ flowchart TD
 ### 方法一：Docker Desktop（推荐）
 
 1. **下载 Docker Desktop**
-   - 访问 [Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install/)
+   - 访问 [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/)
    - 根据芯片类型选择对应版本：
      - Intel 芯片：Docker Desktop for Mac with Intel chip
      - Apple Silicon：Docker Desktop for Mac with Apple chip
@@ -135,7 +130,7 @@ open /Applications/Docker.app
 ### Docker Desktop 安装
 
 1. **下载安装包**
-   - 访问 [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/install/)
+   - 访问 [Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/)
    - 下载 Docker Desktop Installer.exe
 
 2. **安装配置**
